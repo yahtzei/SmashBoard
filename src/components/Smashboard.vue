@@ -1,14 +1,9 @@
 <template>
   <div class="v-smashboard">
-    <h1>{{ playerOne.name }}</h1>
-    <h1>Faves:</h1>
-    <v-fighter v-for="fighter in playerOne.faves" :fighter="fighter" :player="playerOne" />
-    <h1>Mains:</h1>
-    <v-fighter v-for="fighter in playerOne.mains" :fighter="fighter" :player="playerOne" />
-    <hr>
-    <div class="roster">
-      <v-fighter v-for="fighter in playerOne.roster" :fighter="fighter" :player="playerOne" />
-    </div>
+    <v-roster :player="playerOne" />
+    <v-nameplate :player="playerOne" />
+    <v-nameplate :player="playerTwo" />
+    <v-roster :player="playerTwo" />
   </div>
 </template>
 
@@ -36,8 +31,8 @@ export default {
 <style lang="scss" scoped>
 .v-smashboard {
   display: flex;
-  flex-direction: column;
   gap: 16px;
+  justify-content: center;
 }
 
 .roster {
