@@ -1,9 +1,8 @@
 <template>
   <div class="v-smashboard">
-    <v-roster :player="playerOne" />
+    <v-button class="reset" icon="heartbeat" label="Reset everything" @click="reset" negative xsmall />
     <v-nameplate :player="playerOne" />
     <v-nameplate :player="playerTwo" />
-    <v-roster :player="playerTwo" />
   </div>
 </template>
 
@@ -20,7 +19,12 @@ export default {
     
   },
   methods: {
-    
+    reset() {
+      const binIt = confirm("Bin the bastard lot?");
+      if (!binIt) return;
+      localStorage.clear();
+      location.reload();
+    }
   },
   computed: {
     
@@ -40,5 +44,11 @@ export default {
   gap: 4px;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.reset {
+  position: absolute;
+  bottom: 8px;
+  margin-inline: auto;
 }
 </style>

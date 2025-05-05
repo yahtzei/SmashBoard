@@ -19,6 +19,7 @@ export default {
     tertiary: { type: Boolean },
     disabled: { type: Boolean },
     small: { type: Boolean },
+    xsmall: { type: Boolean },
     href: { type: String },
     icon: { type: String },
     iconRight: { type: String },
@@ -34,26 +35,26 @@ export default {
       return this.href ? 'a' : 'button';
     },
     buttonClasses() {
-      const classes = ["v-button-container"]
-
-      if (this.small) classes.push("small");
-
-      if (this.disabled) classes.push("disabled");
-      else if (this.primary) classes.push("primary");
-      else if (this.positive) classes.push("positive");
-      else if (this.negative) classes.push("negative");
-      else if (this.tertiary) classes.push("tertiary");
-      else if (this.secondarySoft) classes.push("secondary-soft")
-      else classes.push("secondary")
-
-      if (!this.$slots.default && !this.label) classes.push("icon-only");
-      else if (this.icon) classes.push("icon-left");
-      else if (this.iconRight) classes.push("icon-right");
+      const classes = [
+        "v-button-container",
+        { "small": this.small },
+        { "xsmall": this.xsmall },
+        { "icon-only": !this.$slots.default && !this.label && (this.icon || this.iconRight) },
+        { "icon-left": (this.$slots.default || this.label) && this.icon },
+        { "icon-right": (this.$slots.default || this.label) && this.iconRight },
+        { "disabled": this.disabled },
+        { "primary": this.primary && !this.disabled },
+        { "positive": this.positive && !this.disabled },
+        { "negative": this.negative && !this.disabled },
+        { "tertiary": this.tertiary && !this.disabled },
+        { "secondary-soft": this.secondarySoft && !this.disabled },
+        { "secondary": !this.primary && !this.positive && !this.negative && !this.tertiary && !this.secondarySoft && !this.disabled },
+      ];
 
       return classes;
     },
     iconSize() {
-      return this.small ? "16" : "24";
+      return this.small || this.xsmall ? "16" : "24";
     },
     linkTarget() {
       return !!this.href && this.href.startsWith("/") ? "" : "_blank";
@@ -110,6 +111,24 @@ export default {
       }
     }
   }
+
+&.xsmall {
+  height: 24px;
+  border-radius: 6px;
+  font-size: 12px;
+
+  &:hover, &:active {
+    height: 26px;
+  }
+
+  &.icon-only {
+    width: 24px;
+
+    &:hover, &:active {
+      width: 26px;
+    }
+  }
+}
 
   &.icon-only {
     padding: 0;

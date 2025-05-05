@@ -5,8 +5,9 @@
       <div v-for="fighter in player.mains">
         <img :src="fighter.imagePath" />
         <span>{{ fighter.name }}</span>
-        <v-button @click="player.toggleMain(fighter)" icon="close" tertiary small />
+        <v-button @click="player.toggleMain(fighter)" icon="close" tertiary xsmall />
       </div>
+      <v-roster-modal :player="player" />
     </div>
   </div>
 </template>
@@ -32,8 +33,15 @@ export default {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  flex-shrink: 0;
 
   > span {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 0.48px;
     font-size: 20px;
     font-weight: 600;
     text-align: center;

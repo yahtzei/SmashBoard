@@ -36,9 +36,16 @@ class Player {
     localStorage.setItem(`${this.name}-mains`, JSON.stringify(mainsData));
   }
 
-  get roster() {
-    const rosterSansMains = Roster.filter(f => !this.hasMain(f));
-    return rosterSansMains.sort((a, b) => this.hasFave(b) - this.hasFave(a));
+  roster(sorting = SortBy.default) {
+    const filteredRoster = Roster.filter(f => !this.hasMain(f));
+
+    switch(sorting) {
+      case SortBy.favouritesFirst:
+        return filteredRoster.sort((a, b) => this.hasFave(b) - this.hasFave(a));
+      case SortBy.default:
+      default:
+        return filteredRoster;
+    }
   }
 
   hasFave(fighter) {
@@ -72,5 +79,14 @@ class Player {
   resetMains() {
     this.mains = this.faves;
     this.saveData();
+  }
+}
+
+class SortBy {
+  static get default() { 
+    return 0; 
+  }
+  static get favouritesFirst() { 
+    return 1; 
   }
 }
