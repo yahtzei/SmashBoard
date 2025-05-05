@@ -1,9 +1,9 @@
 <template>
   <div v-if="$slots.default || label || icon" class="v-button">
     <component :is="buttonType" :id="buttonId" :class="buttonClasses" type="button" :href="href" :target="linkTarget" @click="clicked($event)">
-      <svg-icon v-if="icon" :type="icon" :size="iconSize" />
+      <v-icon v-if="icon" :type="icon" :size="iconSize" />
       <span v-if="$slots.default || label"><slot>{{ label }}</slot></span>
-      <svg-icon v-if="iconRight" :type="iconRight" :size="iconSize" />
+      <v-icon v-if="iconRight" :type="iconRight" :size="iconSize" />
     </component>
   </div>
 </template>

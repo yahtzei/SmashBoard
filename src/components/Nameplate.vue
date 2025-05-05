@@ -5,7 +5,7 @@
       <div v-for="fighter in player.mains">
         <img :src="fighter.imagePath" />
         <span>{{ fighter.name }}</span>
-        <button @click="player.toggleMain(fighter)">x</button>
+        <v-button @click="player.toggleMain(fighter)" icon="close" tertiary small />
       </div>
     </div>
   </div>
