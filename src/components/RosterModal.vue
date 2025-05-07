@@ -1,20 +1,21 @@
 <template>
   <div class="v-roster-modal">
-    <v-button @click="showSelectionModal"
-      icon="plus" 
-      label="Add another" 
-      tertiary 
-      small />
+    <v-button @click="showSelectionModal" icon="plus" primary xsmall />
     <dialog ref="selectionModal" class="selection-modal" v-click-outside="closeSelectionModal">
       <div class="modal-top">
+        <span class="player-name">{{ player.name }}</span>
         <button class="sort-by-button" type="button" @click="sortBy++">
           <v-icon size="16" type="filter" />
           {{ sortByLabel }}
         </button>
-        <v-button @click="closeSelectionModal" icon="close" tertiary xsmall />
+        <input ref="searchInput" v-model="searchTerm" class="search-input">
       </div>
-      <div class="modal-body">
-        <v-fighter v-for="fighter in player.roster(sorting)" :player="player" :fighter="fighter" />
+      <div ref="modalBody" class="modal-body">
+        <span v-show="!playerRoster.length" class="no-results">🤷‍♀️</span>
+        <v-fighter v-for="fighter in playerRoster" 
+          :player="player" 
+          :fighter="fighter" @selected="fighterSelected"
+          selectable />
       </div>
     </dialog>
   </div>
@@ -27,28 +28,39 @@ export default {
   },
   data() {
     return {
-      sortBy: 0
+      sortBy: 0,
+      searchTerm: ''
     }
   },
   methods: {
     showSelectionModal() {
       this.$refs.selectionModal.show();
+      this.$refs.modalBody.scrollTop = 0;
+      this.$refs.searchInput.focus();
     },
     closeSelectionModal() {
       this.$refs.selectionModal.close();
+      this.searchTerm = '';
+    },
+    fighterSelected() {
+      this.searchTerm = '';
+      this.$refs.searchInput.focus();
     }
   },
   computed: {
+    playerRoster() {
+      return this.player.roster(this.sorting, this.searchTerm);
+    },
     sorting() {
       return this.sortBy % 2;
     },
     sortByLabel() {
       switch(this.sorting) {
         case SortBy.favouritesFirst:
-          return "favourites first";
+          return "faves first";
         case SortBy.default:
         default:
-          return "default ordering";
+          return "default order";
       }
     }
   }
@@ -58,7 +70,6 @@ export default {
 <style lang="scss" scoped>
 .v-roster-modal {
   display: flex;
-  position: relative;
 
   > .v-button {
     margin-inline: auto;
@@ -66,15 +77,18 @@ export default {
 }
 
 .selection-modal {
-  top: calc(100% + 4px);
+  top: 80px;
+  margin-inline: auto; 
   border: 1px solid black;
   border-radius: 8px;
-  width: 100%;
+  width: 300px;
   overflow: hidden;
+  box-shadow: var(--shadow-large-overlay);
+  position: fixed;
 
   .modal-top {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     position: relative;
     gap: 4px;
     padding: 4px;
@@ -86,6 +100,8 @@ export default {
     overflow-y: auto;
     padding: 4px;
     max-height: 400px;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -106,5 +122,25 @@ export default {
   &:hover {
     background-color: var(--greyscale-90);
   }
+}
+
+.search-input {
+  outline: none;
+  padding: 4px;
+}
+
+.player-name {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.no-results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  font-size: 36px;
+  line-height: 100%;
 }
 </style>

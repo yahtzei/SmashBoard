@@ -1,11 +1,10 @@
 <template>
   <div class="v-nameplate">
-    <span>{{ player.name }}</span>
+    <span @click="nameClick">{{ player.name }}</span>
     <div class="mains">
       <div v-for="fighter in player.mains">
-        <img :src="fighter.imagePath" />
-        <span>{{ fighter.name }}</span>
-        <v-button @click="player.toggleMain(fighter)" icon="close" tertiary xsmall />
+        <v-fighter :fighter="fighter" :player="player" />
+        <v-button @click="player.toggleMain(fighter)" icon="close" negative xsmall />
       </div>
       <v-roster-modal :player="player" />
     </div>
@@ -17,13 +16,10 @@ export default {
   props: {
     player: { type: Player }
   },
-  data() {
-    return {
-      
+  methods: {
+    nameClick() {
+      this.$emit("name-click")
     }
-  },
-  mounted() {
-    
   }
 }
 </script>
@@ -34,18 +30,24 @@ export default {
   flex-direction: column;
   flex-grow: 1;
   flex-shrink: 0;
+  gap: 20px;
 
   > span {
     display: flex;
     gap: 8px;
     justify-content: center;
     align-items: center;
-    text-transform: uppercase;
-    letter-spacing: 0.48px;
-    font-size: 20px;
+    letter-spacing: 0.5px;
+    font-size: 30px;
     font-weight: 600;
     text-align: center;
-    margin: 20px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      opacity: 0.5;
+    }
   }
 }
 
@@ -60,19 +62,16 @@ export default {
     align-items: center;
     gap: 8px;
     width: 260px;
-
-    > span {
-      font-size: 18px;
+    position: relative;
+    
+    .v-fighter {
       flex-grow: 1;
-      text-align: center;
     }
 
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
+    .v-button {
+      position: absolute;
+      right: calc(100% + 8px);
+      transform: scale(0.6);
     }
   }
 }

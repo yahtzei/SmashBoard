@@ -1,9 +1,10 @@
 <template>
-  <div class="v-fighter" @click="player.toggleMain(fighter)">
+  <div class="v-fighter" :style="activeFighterStyles" @click="toggleMain(fighter)">
     <img :src="fighter.imagePath" />
     <span class="name">{{ fighter.name }}</span>
     <button type="button" 
       :class="['favourite', { 'active': player.hasFave(fighter) }]" 
+      :style="favouriteFighterStyles"
       @click.stop="player.toggleFave(fighter)">
       <v-icon type="heart" />
     </button>
@@ -15,10 +16,36 @@ export default {
   props: {
     fighter: { Fighter },
     player: { Player },
+    selectable: { type: Boolean }
   },
   data() {
     return {
       
+    }
+  },
+  methods: {
+    toggleMain(fighter) {
+      if (!this.selectable) return;
+      this.player.toggleMain(fighter)
+      this.$emit("selected")
+    }
+  },
+  computed: {
+    activeFighterStyles() {
+      if (this.player.activeFighter?.name !== this.fighter.name) return "";
+
+      return {
+        'background-color': `var(--${this.player.colour}-light)`,
+        'color': `var(--${this.player.colour}-dark)`,
+        'box-shadow': `0px 0px 8px 3px var(--${this.player.colour}-primary)`
+      };
+    },
+    favouriteFighterStyles() {
+      if (!this.player.hasFave(this.fighter)) return "";
+
+      return {
+        'color': `var(--${this.player.colour}-primary)`
+      };
     }
   }
 }
@@ -27,7 +54,6 @@ export default {
 <style lang="scss" scoped>
 .v-fighter {
   display: flex;
-  max-width: 300px;
   align-items: center;
   gap: 8px;
   border-radius: 8px;
@@ -67,7 +93,6 @@ export default {
 
   &.active {
     opacity: 1;
-    color: var(--red-primary);
 
     &:hover {
       animation: none;

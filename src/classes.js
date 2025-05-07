@@ -9,12 +9,15 @@ class Fighter {
 }
 
 class Player {
-  constructor(name) {
+  constructor(name, colour) {
     this.name = name;
+    this.colour = colour;
     this.faves = [];
     this.mains = [];
     this.loadData();
   }
+
+  activeFighter = null;
 
   loadData() {
     const favesData = JSON.parse(localStorage.getItem(`${this.name}-faves`));
@@ -36,8 +39,11 @@ class Player {
     localStorage.setItem(`${this.name}-mains`, JSON.stringify(mainsData));
   }
 
-  roster(sorting = SortBy.default) {
-    const filteredRoster = Roster.filter(f => !this.hasMain(f));
+  roster(sorting = SortBy.default, searchTerm = '') {
+    const filteredRoster = Roster.filter((fighter) => {
+      const cleanSearchTerm = searchTerm.toLowerCase().trim();
+      return !this.hasMain(fighter) && fighter.name.toLowerCase().includes(cleanSearchTerm)
+    });
 
     switch(sorting) {
       case SortBy.favouritesFirst:
@@ -71,6 +77,10 @@ class Player {
       this.mains = this.mains.filter(f => f.name !== fighter.name);
     } else {
       this.mains.push(fighter);
+    }
+
+    if (this.activeFighter?.name === fighter.name) {
+      this.activeFighter = null
     }
 
     this.saveData();
