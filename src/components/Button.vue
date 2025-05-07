@@ -11,12 +11,13 @@
 <script>
 export default {
   props: {
-    label: { type: String },
+    label: { type: [String, Number] },
     primary: { type: Boolean },
     positive: { type: Boolean },
     negative: { type: Boolean },
     secondarySoft: { type: Boolean },
     tertiary: { type: Boolean },
+    dark: { type: Boolean },
     disabled: { type: Boolean },
     small: { type: Boolean },
     xsmall: { type: Boolean },
@@ -27,7 +28,7 @@ export default {
   },
   methods: {
     clicked(event) {
-      if (this.buttonType === 'button') this.$emit('click', event);
+      if (this.buttonType === 'button' && !this.disabled) this.$emit('click', event);
     },
   },
   computed: {
@@ -43,12 +44,13 @@ export default {
         { "icon-left": (this.$slots.default || this.label) && this.icon },
         { "icon-right": (this.$slots.default || this.label) && this.iconRight },
         { "disabled": this.disabled },
-        { "primary": this.primary && !this.disabled },
-        { "positive": this.positive && !this.disabled },
-        { "negative": this.negative && !this.disabled },
-        { "tertiary": this.tertiary && !this.disabled },
-        { "secondary-soft": this.secondarySoft && !this.disabled },
-        { "secondary": !this.primary && !this.positive && !this.negative && !this.tertiary && !this.secondarySoft && !this.disabled },
+        { "primary": this.primary },
+        { "positive": this.positive },
+        { "negative": this.negative },
+        { "tertiary": this.tertiary },
+        { "dark": this.dark },
+        { "secondary-soft": this.secondarySoft },
+        { "secondary": !this.primary && !this.positive && !this.negative && !this.tertiary && !this.secondarySoft },
       ];
 
       return classes;
@@ -253,11 +255,25 @@ export default {
     }
   }
 
+  &.dark {
+    color: var(--greyscale-100);
+    border-color: var(--greyscale-70);
+    background-color: var(--greyscale-10);
+
+    &:hover {
+      border-color: var(--greyscale-70);
+    }
+
+    &:active {
+      color: var(--greyscale-70);
+      border-color: var(--greyscale-30);
+      box-shadow: none;
+    }
+  }
+
   &.disabled {
     pointer-events: none;
-    color: var(--greyscale-0-20);
-    border-color: var(--greyscale-30-20);
-    background-color: var(--greyscale-100-20);
+    opacity: 0.5;
   }
 }
 
