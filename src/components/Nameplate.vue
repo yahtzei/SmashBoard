@@ -1,6 +1,7 @@
 <template>
-  <div class="v-nameplate">
+  <div class="v-nameplate" :style="activeFighterStyles">
     <span @click="nameClick">{{ player.name }}</span>
+    <!--<span class="name">{{ fighter.name }}</span>-->
     <div class="mains">
       <div v-for="fighter in player.mains">
         <v-fighter :fighter="fighter" :player="player" />
@@ -8,6 +9,11 @@
       </div>
       <v-roster-modal :player="player" />
     </div>
+    <v-button class="setFaves" icon="mask-happy" :style="{
+    'background-color': `var(--${player.colour}-light)`,
+    'color': `var(--${player.colour}-dark)`,
+    'box-shadow': `0px 0px 4px 3px var(--${player.colour}-primary)`
+  }" @click="setFaves" small />
   </div>
 </template>
 
@@ -19,7 +25,11 @@ export default {
   methods: {
     nameClick() {
       this.$emit("name-click")
+    },
+    setFaves() {
+      this.$emit("set-faves")
     }
+    
   }
 }
 </script>
@@ -31,8 +41,9 @@ export default {
   flex-grow: 1;
   flex-shrink: 0;
   gap: 20px;
+  position: relative; // Add this line
 
-  > span {
+  >span {
     display: flex;
     gap: 8px;
     justify-content: center;
@@ -49,7 +60,17 @@ export default {
       opacity: 0.5;
     }
   }
-}
+
+  .setFaves {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+     transform: translateX(-50%);
+     background-color: transparent;
+      cursor: pointer;
+     // opacity: 0;
+    }
+    }
 
 .mains {
   display: flex;
@@ -57,13 +78,13 @@ export default {
   gap: 8px;
   align-items: center;
 
-  > div {
+  >div {
     display: flex;
     align-items: center;
     gap: 8px;
     width: 260px;
     position: relative;
-    
+
     .v-fighter {
       flex-grow: 1;
     }
@@ -73,6 +94,10 @@ export default {
       right: calc(100% + 8px);
       transform: scale(0.6);
     }
+
+
   }
+
+
 }
 </style>

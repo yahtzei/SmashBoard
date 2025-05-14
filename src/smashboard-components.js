@@ -1,5 +1,5 @@
 import Mixin from './mixin'
-import SmashBoard from './components/SmashBoard.vue';
+import SmashBoard from './components/Smashboard.vue';
 import Button from './components/Button.vue';
 import Icon from './components/Icon.vue';
 import RosterModal from './components/RosterModal.vue';
