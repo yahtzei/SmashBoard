@@ -85,6 +85,7 @@ export default {
   overflow: hidden;
   box-shadow: var(--shadow-large-overlay);
   position: fixed;
+  z-index: 1;
 
   .modal-top {
     display: flex;

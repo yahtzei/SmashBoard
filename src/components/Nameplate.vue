@@ -1,5 +1,5 @@
 <template>
-  <div class="v-nameplate" :style="activeFighterStyles">
+  <div class="v-nameplate">
     <span @click="nameClick">{{ player.name }}</span>
     <!--<span class="name">{{ fighter.name }}</span>-->
     <div class="mains">
@@ -9,11 +9,7 @@
       </div>
       <v-roster-modal :player="player" />
     </div>
-    <v-button class="setFaves" icon="mask-happy" :style="{
-    'background-color': `var(--${player.colour}-light)`,
-    'color': `var(--${player.colour}-dark)`,
-    'box-shadow': `0px 0px 4px 3px var(--${player.colour}-primary)`
-  }" @click="setFaves" small />
+    <v-button class="set-faves-btn" icon="mask-happy" @click="setFaves" :style="setFavesButtonStyles" small dark />
   </div>
 </template>
 
@@ -22,6 +18,15 @@ export default {
   props: {
     player: { type: Player }
   },
+  computed: {
+    setFavesButtonStyles() {
+      return [
+        {'background-color': `var(--${this.player.colour}-light)`},
+        {'color': `var(--${this.player.colour}-dark)`},
+        {'box-shadow': `0px 0px 4px 3px var(--${this.player.colour}-primary)`}
+      ];
+    }
+  },
   methods: {
     nameClick() {
       this.$emit("name-click")
@@ -29,7 +34,6 @@ export default {
     setFaves() {
       this.$emit("set-faves")
     }
-    
   }
 }
 </script>
@@ -43,7 +47,7 @@ export default {
   gap: 20px;
   position: relative; // Add this line
 
-  >span {
+  > span {
     display: flex;
     gap: 8px;
     justify-content: center;
@@ -60,17 +64,12 @@ export default {
       opacity: 0.5;
     }
   }
+}
 
-  .setFaves {
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
-     transform: translateX(-50%);
-     background-color: transparent;
-      cursor: pointer;
-     // opacity: 0;
-    }
-    }
+.set-faves-btn {
+  align-self: center;
+  margin-top: auto;
+}
 
 .mains {
   display: flex;
@@ -78,7 +77,7 @@ export default {
   gap: 8px;
   align-items: center;
 
-  >div {
+  > div {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -94,10 +93,6 @@ export default {
       right: calc(100% + 8px);
       transform: scale(0.6);
     }
-
-
   }
-
-
 }
 </style>
