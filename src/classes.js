@@ -14,6 +14,7 @@ class Player {
     this.colour = colour;
     this.faves = [];
     this.mains = [];
+    this.defaults = [];
     this.loadData();
   }
 
@@ -24,7 +25,10 @@ class Player {
     if (favesData) {
       this.faves = Roster.filter(f => favesData.includes(f.name));
     }
-
+    const defaultsData = JSON.parse(localStorage.getItem(`${this.name}-faves`));
+    if (favesData) {
+      this.faves = Roster.filter(f => favesData.includes(f.name));
+    }
     const mainsData = JSON.parse(localStorage.getItem(`${this.name}-mains`));
     if (mainsData) {
       this.mains = Roster.filter(f => mainsData.includes(f.name));
@@ -34,6 +38,9 @@ class Player {
   saveData() {
     const favesData = this.faves.map(f => f.name);
     localStorage.setItem(`${this.name}-faves`, JSON.stringify(favesData));
+
+    const defaultsData = this.defaults.map(f => f.name);
+    localStorage.setItem(`${this.name}-defaults`, JSON.stringify(defaultsData));
 
     const mainsData = this.mains.map(f => f.name);
     localStorage.setItem(`${this.name}-mains`, JSON.stringify(mainsData));
@@ -58,6 +65,10 @@ class Player {
     return this.faves.some(f => f.name === fighter.name);
   }
 
+   hasDefault(fighter) {
+    return this.defaults.some(f => f.name === fighter.name);
+  }
+
   hasMain(fighter) {
     return this.mains.some(f => f.name === fighter.name);
   }
@@ -67,6 +78,16 @@ class Player {
       this.faves = this.faves.filter(f => f.name !== fighter.name);
     } else {
       this.faves.push(fighter);
+    }
+
+    this.saveData();
+  }
+
+  toggleDefault(fighter) {
+    if (this.hasDefault(fighter)) {
+      this.defaults = this.defaults.filter(f => f.name !== fighter.name);
+    } else {
+      this.defaults.push(fighter);
     }
 
     this.saveData();

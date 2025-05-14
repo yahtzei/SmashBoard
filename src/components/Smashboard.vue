@@ -1,12 +1,12 @@
 <template>
   <div class="v-smashboard">
     <v-button class="reset" icon="heartbeat" @click="reset" negative xsmall />
-    <v-nameplate :player="playerOne" @name-click="rollTheDie(playerOne)" />
+    <v-nameplate :player="playerOne" @name-click="rollTheDie(playerOne)" @set-faves="setPlayerFaves(playerOne)"/>
     <v-button @click="rollTheDice" 
       :icon="isRolling ? 'spinner' : 'refresh'"
       :disabled="noMains || isRolling" 
       dark />
-    <v-nameplate :player="playerTwo" @name-click="rollTheDie(playerTwo)" />
+    <v-nameplate :player="playerTwo" @name-click="rollTheDie(playerTwo)" @set-faves="setPlayerFaves(playerTwo)" />
   </div>
 </template>
 
@@ -54,6 +54,9 @@ export default {
       };
 
       spin();
+    },
+    setPlayerFaves(player) {
+      player.mains = player.faves;
     }
   },
   computed: {
@@ -86,4 +89,6 @@ export default {
   bottom: 8px;
   margin-inline: auto;
 }
+
+
 </style>
