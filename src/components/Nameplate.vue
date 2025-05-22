@@ -9,7 +9,10 @@
       </div>
       <v-roster-modal :player="player" />
     </div>
-    <v-button class="set-faves-btn" icon="mask-happy" @click="setFaves" :style="setFavesButtonStyles" small dark />
+    <div class="set-faves-container">
+      <v-button class="set-faves-btn" icon="mask-happy" @click="setFaves" :style="setFavesButtonStyles" small dark />
+      <v-button class="set-faves-btn" icon="search-history" @click="togglePreventRerolls" :style="togglePreventRerollsButtonStyles" small dark />
+    </div>
   </div>
 </template>
 
@@ -25,7 +28,20 @@ export default {
         {'color': `var(--${this.player.colour}-dark)`},
         {'box-shadow': `0px 0px 4px 3px var(--${this.player.colour}-primary)`}
       ];
+    },
+    togglePreventRerollsButtonStyles() {
+    const styles = [
+      {'background-color': `var(--${this.player.colour}-light)`},
+      {'color': `var(--${this.player.colour}-dark)`},
+      {'box-shadow': `0px 0px 0px 0px var(--${this.player.colour}-primary)`}
+    ];
+
+    if (this.player.preventRerolls) {
+      styles.push({'box-shadow': `0 0 4px 3px var(--${this.player.colour}-primary)`});
     }
+
+    return styles;
+  }
   },
   methods: {
     nameClick() {
@@ -33,6 +49,9 @@ export default {
     },
     setFaves() {
       this.$emit("set-faves")
+    },
+    togglePreventRerolls() {
+      this.player.preventRerolls = !this.player.preventRerolls;
     }
   }
 }
@@ -71,6 +90,13 @@ export default {
   margin-top: auto;
 }
 
+.set-faves-container {
+  display: flex;
+  gap: 20px;
+  align-self: center;
+  margin-top: auto;
+}
+
 .mains {
   display: flex;
   flex-direction: column;
@@ -81,7 +107,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 8px;
-    width: 260px;
+    width: 240px;
     position: relative;
 
     .v-fighter {

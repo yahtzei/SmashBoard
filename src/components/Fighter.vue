@@ -1,6 +1,6 @@
 <template>
   <div class="v-fighter" :style="activeFighterStyles" @click="toggleMain(fighter)">
-    <img :src="fighter.imagePath" />
+    <img :src="fighter.iconPath" />
     <span class="name">{{ fighter.name }}</span>
     <button type="button" 
       :class="['favourite', { 'active': player.hasFave(fighter) }]" 
