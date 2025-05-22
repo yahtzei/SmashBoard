@@ -1,10 +1,10 @@
 <template>
   <div class="v-nameplate">
-    <span @click="nameClick">{{ player.name }}</span>
+    <span @click="nameClick">{{player.name}}</span>
     <!--<span class="name">{{ fighter.name }}</span>-->
     <div class="mains">
       <div v-for="fighter in player.mains">
-        <v-fighter :fighter="fighter" :player="player" />
+        <v-fighter v-bind:fighter="fighter" :fighter="fighter" :player="player" />
         <v-button @click="player.toggleMain(fighter)" icon="close" negative xsmall />
       </div>
       <v-roster-modal :player="player" />
