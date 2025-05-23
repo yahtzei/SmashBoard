@@ -1,13 +1,12 @@
 <template>
   <div class="v-smashboard">
-    <img :src="vsImage" />
     <v-button class="reset" icon="heartbeat" @click="reset" negative xsmall />
     <v-nameplate class="roster" :player="playerOne" @name-click="rollTheDie(playerOne)" @set-faves="playerOne.resetMains()" />
     <div class="middle-panel">
       <v-button @click="rollTheDice" :icon="isRolling ? 'spinner' : 'refresh'" :disabled="noMains || isRolling" dark />
       <div class="image-row">
         <img :src="!playerOne.activeFighter ? playerOneDieImage : playerOne.activeFighter.imagePath" class="char-image" />
-        <img src="/src/assets/vs-img.png" class="vs-image"/>
+        <img :src="vsImage" class="vs-image"/>
         <img :src="!playerTwo.activeFighter ? playerTwoDieImage : playerTwo.activeFighter.imagePath" :class="['char-image', { 'p2-no-active-fighter': !playerTwo.activeFighter }]" />
       </div>
     </div>
@@ -22,8 +21,9 @@ export default {
       playerOne: P1,
       playerTwo: P2,
       isRolling: false,
-      playerOneDieImage: "/src/assets/misc-images/SmashLogoRed.png",
-      playerTwoDieImage: "/src/assets/misc-images/SmashLogoRed.png"
+      vsImage: "src/assets/vs-img.png",
+      playerOneDieImage: "src/assets/misc-images/SmashLogoRed.png",
+      playerTwoDieImage: "src/assets/misc-images/SmashLogoRed.png"
     }
   },
   methods: {
