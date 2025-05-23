@@ -3,8 +3,12 @@ class Fighter {
     this.name = name;
   }
 
-  get imagePath() {
+  get iconPath() {
     return `src/assets/fighter-icons/${this.name}.png`;
+  }
+
+  get imagePath() {
+    return `src/assets/fighter-imgs/${this.name}.png`;
   }
 }
 
@@ -16,6 +20,8 @@ class Player {
     this.mains = [];
     this.defaults = [];
     this.loadData();
+    this.lastRoll = null;
+    this.preventRerolls = false;
   }
 
   activeFighter = null;
@@ -108,8 +114,7 @@ class Player {
   }
 
   resetMains() {
-    this.mains = this.faves;
-    this.saveData();
+    this.mains = [...this.faves];
   }
 }
 
