@@ -89,6 +89,7 @@ export default {
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
+  outline: none;
 
   &:hover, &:active {
     height: 42px;

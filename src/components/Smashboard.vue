@@ -1,6 +1,5 @@
 <template>
   <div class="v-smashboard">
-    <v-button class="reset" icon="heartbeat" @click="reset" negative xsmall />
     <v-nameplate class="roster" :player="playerOne" @name-click="rollTheDie(playerOne)" @set-faves="playerOne.resetMains()" />
     <div class="middle-panel">
       <v-button @click="rollTheDice" :icon="isRolling ? 'spinner' : 'refresh'" :disabled="noMains || isRolling" dark />
@@ -27,12 +26,6 @@ export default {
     }
   },
   methods: {
-    reset() {
-      const binIt = confirm("Bin the bastard lot?");
-      if (!binIt) return;
-      localStorage.clear();
-      location.reload();
-    },
     rollTheDice() {
       this.rollTheDie(this.playerOne);
       this.rollTheDie(this.playerTwo);
@@ -84,8 +77,6 @@ export default {
   display: flex;
   gap: 16px;
   justify-content: center;
-  height: 100vh;
-  background-color: var(--greyscale-0);
   padding-block: 20px;
 }
 
