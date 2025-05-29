@@ -17,7 +17,8 @@
 export default {
   data() {
     return {
-      timeDisplay: ''
+      timeDisplay: '',
+      clockInterval: null
     }
   },
   mounted() {
@@ -42,7 +43,8 @@ export default {
     },
     startClock() {
       this.setTime();
-      setInterval(this.setTime, 10000);
+      if (this.clockInterval) return;
+      this.clockInterval = setInterval(this.setTime, 5000);
     },
     setTime() {
       const date = new Date();
