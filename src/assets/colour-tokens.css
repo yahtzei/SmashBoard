@@ -59,7 +59,75 @@
   --negative-outline: 0px 0px 0px 2px rgba(207, 23, 56, 0.20);
   --positive-outline: 0px 0px 0px 2px rgba(45, 133, 74, 0.20);
   --outline-button-secondary: inset 0px 0px 0px 1px var(--greyscale-0);
+  /*--elden ring colours copied from https://www.reddit.com/r/Eldenring/comments/sxmb29/elden_ring_colors_charts/*/
+  --cave1: #242650;
+  --cave2: #4d318c;
+  --cave3: #8878bf;
+  --cave4: #adaae7;
+  --cave5: #593324;
+  --cave6: #401934;
+  --cave7: #f1c673;
+  --cave8: #a75e45;
+  --limgrave1: #1a2325;
+  --limgrave2: #30413d;
+  --limgrave3: #687356;
+  --limgrave4: #bdbe8e;
+  --limgrave5: #dad2b0;
+  --limgrave6: #476748;
+  --limgrave7: #f2d16c;
+  --limgrave8: #b07943;
+  --liurnia1: #071635;
+  --liurnia2: #3c5473;
+  --liurnia3: #a5b2c0;
+  --liurnia4: #1c3030;
+  --liurnia5: #35213a;
+  --liurnia6: #6e7170;
+  --liurnia7: #ecdb6f;
+  --liurnia8: #cfcbaa;
+  --altusplateau1: #363135;
+  --altusplateau2: #5a4430;
+  --altusplateau3: #8d7d6c;
+  --altusplateau4: #5a2102;
+  --altusplateau5: #250102;
+  --altusplateau6: #a65813;
+  --altusplateau7: #d9b13b;
+  --altusplateau8: #bf8e34;
+  --caelid1: #251a17;
+  --caelid2: #59341e;
+  --caelid3: #59281d;
+  --caelid4: #a76d3d;
+  --caelid5: #dea579;
+  --caelid6: #ca9b5d;
+  --caelid7: #f2da90;
+  --caelid8: #8b463f;
+  --liurniaB1: #161933;
+  --liurniaB2: #323858;
+  --liurniaB3: #555e8b;
+  --liurniaB4: #a7b8d9;
+  --liurniaB5: #6b4f37;
+  --liurniaB6: #3a231b;
+  --liurniaB7: #d9c092;
+  --liurniaB8: #a9874e;
+  --limgraveB1: #2f402d;
+  --limgraveB2: #a3a64a;
+  --limgraveB3: #9da698;
+  --limgraveB4: #f1ebc9;
+  --limgraveB5: #bfb580;
+  --limgraveB6: #4c3234;
+  --limgraveB7: #d9b959;
+  --limgraveB8: #80632b;
+  --mtgelmir1: #261713;
+  --mtgelmir2: #340c05;
+  --mtgelmir3: #731701;
+  --mtgelmir4: #bf4903;
+  --mtgelmir5: #735855;
+  --mtgelmir6: #daa3a3;
+  --mtgelmir7: #f2d1ca;
+  --mtgelmir8: #d58014;
+
 }
+
+
 
 * { 
   padding: 0; 

@@ -1,6 +1,6 @@
 <template>
   <div class="v-index">
-    <v-menu />
+    <v-menu class="clock"/>
     <router-view />
   </div>
 </template>
@@ -25,4 +25,13 @@ export default {
   overflow: hidden;
   background-color: var(--greyscale-0);
 }
+
+.clock {
+  position: fixed; 
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+
 </style>

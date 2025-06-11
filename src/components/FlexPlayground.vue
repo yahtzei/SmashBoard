@@ -1,22 +1,51 @@
 <template>
+  <div> 
   <div class="parent">
     <div class="child"></div>
     <div class="child maverick"></div>
     <div id="whatever" class="child unwanted"></div>
   </div>
+  <h1>All Icons</h1>
+  <div class="icon-display-container">
+    <div v-for="iconName in allIconNames" :key="iconName" class="icon-item">
+      <v-icon :type="iconName" :size="48" :colour="'#333'"></v-icon> 
+      <p>{{ iconName }}</p>
+    </div>
+  </div>
+  </div>
 </template>
 
 <script>
+import IconComponentDefinition from './Icon.vue'; 
+
 export default {
   data() {
     return {
-      htmlStuff: "<button>I wanna be a div</button>"
+      htmlStuff: "<button>I wanna be a div</button>",
+      allIconNames: [] 
+    };
+  },
+  created() {
+    // The `created()` hook runs after the component instance is created,
+    // but before it's mounted to the DOM. This is a perfect place to
+    // get static data from other component definitions.
+
+    // Access the 'icons' data from the imported IconComponentDefinition
+    // We need to call data() as it's a function that returns the data object.
+    const iconDefinitions = IconComponentDefinition.data();
+    
+    if (iconDefinitions && iconDefinitions.icons) {
+      this.allIconNames = Object.keys(iconDefinitions.icons);
+      console.log('Successfully retrieved icon names:', this.allIconNames);
+    } else {
+      console.error("Failed to retrieve 'icons' data from Icon.vue component definition.");
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
+/* Your styles here */
 
 div {
 
@@ -64,6 +93,7 @@ div.parent > div.child {
 
 .parent {
   display: flex;
+  flex-direction: column;
   margin: 10px;
   border: 4px solid blue;
   justify-content: space-evenly;
@@ -78,8 +108,30 @@ div.parent > div.child {
   justify-content: center;
 
   &.maverick {
-    flex-grow: 3;
+    flex-grow: 2;
   }
+}
+
+.icon-display-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  justify-content: center;
+}
+
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #000000;
+  min-width: 120px;
+  text-align: center;
+  color: #ffffff; /* White text color */
 }
 
 #twat {

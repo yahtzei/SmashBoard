@@ -6,19 +6,39 @@
     <dialog ref="menuModal" class="menu-modal" v-click-outside="closeMenu">
       <div>
         <v-button dark @click="goToPage('smashboard')">SMASH</v-button>
+        <div class="boss-button-div"> <v-button dark @click="goToPage('bossboard')">BOSS</v-button>
+          <div dark v-if="$route.path === '/bossboard'">
+            <v-button dark @click="showSubMenu(); closeMenu()">Skins</v-button>
+          </div>
+        </div>
         <v-button dark @click="goToPage('flex')">FLEX</v-button>
         <v-button class="reset" icon="heartbeat" @click="reset" negative xsmall />
+      </div>
+
+    </dialog>
+    <dialog ref="subMenuModal" class="sub-menu-modal" v-click-outside="closeSubMenu">
+      <div>
+        <v-button dark @click="palette.setPalette('liurnia'); closeSubMenu()">Liurnia</v-button>
+        <v-button dark @click="palette.setPalette('limgrave'); closeSubMenu()">Limgrave</v-button>
+        <v-button dark @click="palette.setPalette('altusplateau'); closeSubMenu()">Altus Plateau</v-button>
+        <v-button dark @click="palette.setPalette('caelid'); closeSubMenu()">Caelid</v-button>
+        <v-button dark @click="palette.setPalette('mtgelmir'); closeSubMenu()">Mt Gelmir</v-button>
+        <v-button dark @click="palette.setPalette('cave'); closeSubMenu()">Cave</v-button>
+        <v-button dark @click="palette.setPalette('liurniaB'); closeSubMenu()">Liurnia (Alternate)</v-button>
+        <v-button dark @click="palette.setPalette('limgraveB'); closeSubMenu()">Limgrave (Alternate)</v-button>
       </div>
     </dialog>
   </div>
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       timeDisplay: '',
-      clockInterval: null
+      clockInterval: null,
+      palette: BossboardPalette
     }
   },
   mounted() {
@@ -32,8 +52,14 @@ export default {
     showMenu() {
       this.$refs.menuModal.showModal();
     },
+    showSubMenu() {
+      this.$refs.subMenuModal.showModal();
+    },
     closeMenu() {
       this.$refs.menuModal.close();
+    },
+    closeSubMenu() {
+      this.$refs.subMenuModal.close();
     },
     reset() {
       const binIt = confirm("Bin the bastard lot?");
@@ -53,7 +79,7 @@ export default {
       const minutes = date.getMinutes();
       const minutesString = minutes < 10 ? `0${minutes}` : `${minutes}`;
       this.timeDisplay = `${hoursString}:${minutesString}`;
-    }
+    },
   },
 }
 </script>
@@ -68,14 +94,7 @@ export default {
   opacity: 0.8;
   cursor: pointer;
   --outline-colour: var(--greyscale-20);
-  filter: drop-shadow(1px 0px 0px var(--outline-colour))
-          drop-shadow(-1px 0px 0px var(--outline-colour))
-          drop-shadow(0px 1px 0px var(--outline-colour))
-          drop-shadow(0px -1px 0px var(--outline-colour))
-          drop-shadow(1px 1px 0px var(--outline-colour))
-          drop-shadow(-1px -1px 0px var(--outline-colour))
-          drop-shadow(-1px 1px 0px var(--outline-colour))
-          drop-shadow(1px -1px 0px var(--outline-colour));
+  filter: drop-shadow(1px 0px 0px var(--outline-colour)) drop-shadow(-1px 0px 0px var(--outline-colour)) drop-shadow(0px 1px 0px var(--outline-colour)) drop-shadow(0px -1px 0px var(--outline-colour)) drop-shadow(1px 1px 0px var(--outline-colour)) drop-shadow(-1px -1px 0px var(--outline-colour)) drop-shadow(-1px 1px 0px var(--outline-colour)) drop-shadow(1px -1px 0px var(--outline-colour));
 
   &:hover {
     opacity: 1;
@@ -105,7 +124,7 @@ export default {
   border: none;
   background-color: transparent;
 
-  > div {
+  >div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -118,6 +137,30 @@ export default {
 }
 
 .menu-modal::backdrop {
-    background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.sub-menu-modal {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  background-color: transparent;
+
+  >div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    // border: 1px solid var(--greyscale-20);
+    border-radius: 8px;
+    //background-color: var(--greyscale-10);
   }
+}
+
+.boss-button-div {
+  display: flex;
+  flex-direction: row;
+}
 </style>

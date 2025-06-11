@@ -12,6 +12,20 @@ class Fighter {
   }
 }
 
+class Boss {
+  constructor(name) {
+    this.name = name;
+  }
+
+  get iconPath() {
+    return `src/assets/boss-icons/${this.name}2.png`;
+  }
+
+  get imagePath() {
+    return `src/assets/boss-imgs/${this.name}.png`;
+  }
+}
+
 class Player {
   constructor(name, colour) {
     this.name = name;
@@ -58,7 +72,7 @@ class Player {
       return !this.hasMain(fighter) && fighter.name.toLowerCase().includes(cleanSearchTerm)
     });
 
-    switch(sorting) {
+    switch (sorting) {
       case SortBy.favouritesFirst:
         return filteredRoster.sort((a, b) => this.hasFave(b) - this.hasFave(a));
       case SortBy.default:
@@ -71,7 +85,7 @@ class Player {
     return this.faves.some(f => f.name === fighter.name);
   }
 
-   hasDefault(fighter) {
+  hasDefault(fighter) {
     return this.defaults.some(f => f.name === fighter.name);
   }
 
@@ -119,10 +133,191 @@ class Player {
 }
 
 class SortBy {
-  static get default() { 
-    return 0; 
+  static get default() {
+    return 0;
   }
-  static get favouritesFirst() { 
-    return 1; 
+  static get favouritesFirst() {
+    return 1;
   }
 }
+
+class Dicelist {
+
+}
+
+
+class EldenPlayer {
+  constructor(name, colour, defaultColourNum) {
+    this.name = name;
+    this.colour = colour;
+    this.faves = [];
+    this.mains = [];
+    this.defaults = [];
+    this.beaten = [];
+    this.loadData();
+    this.lastRoll = null;
+    this.preventRerolls = false;
+    this.defaultColourNum = defaultColourNum;
+  }
+
+  activeBoss = null;
+
+  loadData() {
+    const favesData = JSON.parse(localStorage.getItem(`${this.name}-faves`));
+    if (favesData) {
+      this.faves = BossRoster.filter(f => favesData.includes(f.name));
+    }
+    const defaultsData = JSON.parse(localStorage.getItem(`${this.name}-faves`));
+    if (favesData) {
+      this.faves = BossRoster.filter(f => favesData.includes(f.name));
+    }
+    const mainsData = JSON.parse(localStorage.getItem(`${this.name}-mains`));
+    if (mainsData) {
+      this.mains = BossRoster.filter(f => mainsData.includes(f.name));
+    }
+    const beatenData = JSON.parse(localStorage.getItem(`${this.name}-beaten`));
+    if (beatenData) {
+      this.beaten = BossRoster.filter(f => beatenData.includes(f.name));
+    }
+  }
+
+  saveData() {
+    const favesData = this.faves.map(f => f.name);
+    localStorage.setItem(`${this.name}-faves`, JSON.stringify(favesData));
+
+    const defaultsData = this.defaults.map(f => f.name);
+    localStorage.setItem(`${this.name}-defaults`, JSON.stringify(defaultsData));
+
+    const mainsData = this.mains.map(f => f.name);
+    localStorage.setItem(`${this.name}-mains`, JSON.stringify(mainsData));
+  }
+
+  bossRoster(sorting = SortBy.default, searchTerm = '') {
+    const filteredBossRoster = BossRoster.filter((boss) => {
+      const cleanSearchTerm = searchTerm.toLowerCase().trim();
+      return !this.hasMain(boss) && boss.name.toLowerCase().includes(cleanSearchTerm)
+    });
+
+    switch (sorting) {
+      case SortBy.favouritesFirst:
+        return filteredBossRoster.sort((a, b) => this.hasFave(b) - this.hasFave(a));
+      case SortBy.default:
+      default:
+        return filteredBossRoster;
+    }
+  }
+
+  hasFave(boss) {
+    return this.faves.some(f => f.name === boss.name);
+  }
+
+  hasDefault(boss) {
+    return this.defaults.some(f => f.name === boss.name);
+  }
+
+  hasMain(boss) {
+    return this.mains.some(f => f.name === boss.name);
+  }
+
+  hasBeaten(boss) {
+    return this.beaten.some(f => f.name === boss.name);
+  }
+
+  toggleFave(boss) {
+    if (this.hasFave(boss)) {
+      this.faves = this.faves.filter(f => f.name !== boss.name);
+    } else {
+      this.faves.push(boss);
+    }
+
+    this.saveData();
+  }
+
+  toggleBeaten(boss) {
+    if (this.hasBeaten(boss)) {
+      this.beaten = this.beaten.filter(f => f.name !== boss.name);
+    } else {
+      this.beaten.push(boss);
+    }
+
+    this.saveData();
+  }
+
+  toggleDefault(boss) {
+    if (this.hasDefault(boss)) {
+      this.defaults = this.defaults.filter(f => f.name !== boss.name);
+    } else {
+      this.defaults.push(boss);
+    }
+
+    this.saveData();
+  }
+
+  toggleMain(boss) {
+    if (this.hasMain(boss)) {
+      this.mains = this.mains.filter(f => f.name !== boss.name);
+    } else {
+      this.mains.push(boss);
+    }
+
+    if (this.activeBoss?.name === boss.name) {
+      this.activeBoss = null
+    }
+
+    this.saveData();
+  }
+
+  resetMains() {
+    this.mains = [...this.faves];
+  }
+
+  setUnbeaten() {
+    //needs changing so it sets to non-beaten
+    this.mains = [...this.beaten];
+  }
+
+}
+
+
+class Palette {
+  constructor(screen) {
+    this.screenName = screen;
+    this._chosenPalette = 'liurnia';
+  }
+  get chosenPalette() {
+    return this._chosenPalette;
+  }
+  set chosenPalette(newPalette) {
+    this._chosenPalette = newPalette;
+  }
+  get colour1() {
+    return this._chosenPalette + '1';
+  }
+  get colour2() {
+    return this._chosenPalette + '2';
+  }
+  get colour3() {
+    return this._chosenPalette + '3';
+  }
+  get colour4() {
+    return this._chosenPalette + '4';
+  }
+  get colour5() {
+    return this._chosenPalette + '5';
+  }
+  get colour6() {
+    return this._chosenPalette + '6';
+  }
+  get colour7() {
+    return this._chosenPalette + '7';
+  }
+  get colour8() {
+    return this._chosenPalette + '8';
+  }
+
+    setPalette(palette) {
+    this._chosenPalette = palette;
+    console.log("New chosenPalette:", this.chosenPalette);
+  }
+}
+

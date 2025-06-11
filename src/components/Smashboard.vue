@@ -1,15 +1,19 @@
 <template>
   <div class="v-smashboard">
-    <v-nameplate class="roster" :player="playerOne" @name-click="rollTheDie(playerOne)" @set-faves="playerOne.resetMains()" />
+    <v-nameplate class="roster" :player="playerOne" @name-click="rollTheDie(playerOne)"
+      @set-faves="playerOne.resetMains()" />
     <div class="middle-panel">
       <v-button @click="rollTheDice" :icon="isRolling ? 'spinner' : 'refresh'" :disabled="noMains || isRolling" dark />
       <div class="image-row">
-        <img :src="!playerOne.activeFighter ? playerOneDieImage : playerOne.activeFighter.imagePath" class="char-image" />
-        <img :src="vsImage" class="vs-image"/>
-        <img :src="!playerTwo.activeFighter ? playerTwoDieImage : playerTwo.activeFighter.imagePath" :class="['char-image', { 'p2-no-active-fighter': !playerTwo.activeFighter }]" />
+        <img :src="!playerOne.activeFighter ? playerOneDieImage : playerOne.activeFighter.imagePath"
+          class="char-image" />
+        <img :src="vsImage" class="vs-image" />
+        <img :src="!playerTwo.activeFighter ? playerTwoDieImage : playerTwo.activeFighter.imagePath"
+          :class="['char-image', { 'p2-no-active-fighter': !playerTwo.activeFighter }]" />
       </div>
     </div>
-    <v-nameplate class="roster" :player="playerTwo" @name-click="rollTheDie(playerTwo)" @set-faves="playerTwo.resetMains()" />
+    <v-nameplate class="roster" :player="playerTwo" @name-click="rollTheDie(playerTwo)"
+      @set-faves="playerTwo.resetMains()" />
   </div>
 </template>
 
@@ -49,7 +53,7 @@ export default {
             return;
           }
 
-          player.lastRoll = player.activeFighter.name; 
+          player.lastRoll = player.activeFighter.name;
 
           return;
         }
@@ -89,10 +93,11 @@ export default {
 }
 
 .middle-panel {
-  flex-basis: 50%; 
+  flex-basis: 50%;
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5%;
 }
 
 .reset {
@@ -103,16 +108,16 @@ export default {
 
 .image-row {
   display: flex;
-  flex-direction: row; 
-  align-items: center; 
-  justify-content: space-evenly; 
-  margin-top: 10px; 
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 10px;
 }
 
 .char-image {
-  width: 220px; 
+  width: 220px;
   height: 240px;
-  align-items: center; 
+  align-items: center;
   object-fit: contain;
 
   &.p2-no-active-fighter {
@@ -121,10 +126,8 @@ export default {
 }
 
 .vs-image {
-  max-width: 30%; 
+  max-width: 30%;
   height: auto;
-  align-items: center; 
+  align-items: center;
 }
-
-
 </style>

@@ -11,6 +11,13 @@ import RosterModal from './components/RosterModal.vue';
 import Nameplate from './components/Nameplate.vue';
 import Fighter from './components/Fighter.vue';
 import Roster from './components/Roster.vue';
+import Dicelist from './components/Dicelist.vue';
+import BossBoard from './components/Bossboard.vue';
+import Bossplate from './components/Bossplate.vue';
+import BossRoster from './components/BossRoster.vue';
+import BossRosterModal from './components/BossRosterModal.vue';
+import Boss from './components/Boss.vue';
+
 
 if (typeof Vue !== 'undefined') {
   Vue.mixin(Mixin);
@@ -25,14 +32,23 @@ if (typeof Vue !== 'undefined') {
   Vue.component('v-nameplate', Nameplate);
   Vue.component('v-fighter', Fighter);
   Vue.component('v-roster', Roster);
+  Vue.component('v-dicelist', Dicelist);
+  Vue.component('v-boss', Boss);
+  Vue.component('v-bossboard', BossBoard);
+  Vue.component('v-bossplate', Bossplate);
+  Vue.component('v-bossroster', BossRoster);
+  Vue.component('v-bossroster-modal', BossRosterModal);
+
 }
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
   routes: [
+    { path: '/', component: Dicelist },
     { path: '/smashboard', component: SmashBoard },
-    { path: '/flex', component: FlexPlayground }
+    { path: '/flex', component: FlexPlayground },
+    { path: '/bossboard', component: BossBoard }
   ]
 });
 
