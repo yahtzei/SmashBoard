@@ -141,23 +141,21 @@ class SortBy {
   }
 }
 
-class Dicelist {
-
-}
-
-
 class EldenPlayer {
-  constructor(name, colour, defaultColourNum) {
+  constructor(name, colour, primaryColourNum, secondaryColourNum) {
     this.name = name;
     this.colour = colour;
     this.faves = [];
     this.mains = [];
     this.defaults = [];
     this.beaten = [];
+    this.ignoreBeaten = false;
     this.loadData();
     this.lastRoll = null;
     this.preventRerolls = false;
-    this.defaultColourNum = defaultColourNum;
+    this.primaryColourNum = primaryColourNum;
+    this.secondaryColourNum = secondaryColourNum;
+
   }
 
   activeBoss = null;
@@ -190,6 +188,9 @@ class EldenPlayer {
 
     const mainsData = this.mains.map(f => f.name);
     localStorage.setItem(`${this.name}-mains`, JSON.stringify(mainsData));
+
+    const beatenData = this.beaten.map(f => f.name);
+    localStorage.setItem(`${this.name}-beaten`, JSON.stringify(beatenData));
   }
 
   bossRoster(sorting = SortBy.default, searchTerm = '') {
@@ -271,11 +272,6 @@ class EldenPlayer {
     this.mains = [...this.faves];
   }
 
-  setUnbeaten() {
-    //needs changing so it sets to non-beaten
-    this.mains = [...this.beaten];
-  }
-
 }
 
 
@@ -315,7 +311,7 @@ class Palette {
     return this._chosenPalette + '8';
   }
 
-    setPalette(palette) {
+  setPalette(palette) {
     this._chosenPalette = palette;
     console.log("New chosenPalette:", this.chosenPalette);
   }

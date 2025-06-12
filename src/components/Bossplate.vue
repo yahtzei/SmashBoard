@@ -1,6 +1,6 @@
 <template>
   <div class="v-bossplate">
-    <span @click="nameClick">{{eldenplayer.name}}</span>
+    <span @click="nameClick">{{ eldenplayer.name }}</span>
     <!--<span class="name">{{ fighter.name }}</span>-->
     <div class="mains">
       <div v-for="boss in eldenplayer.mains">
@@ -12,7 +12,8 @@
     <div class="set-faves-container">
       <v-button class="set-faves-btn" icon="mask-happy" @click="setFaves" :style="setFavesButtonStyles" small dark />
       <v-button class="set-faves-btn" icon="search-history" @click="togglePreventRerolls" :style="togglePreventRerollsButtonStyles" small dark />
-      <v-button class="set-unbeaten-btn" icon="no-ghost" @click="setUnbeaten" :style="setFavesButtonStyles" small dark />
+      <v-button class="toggle-ignore-btn" icon="no-ghost" @click="toggleIgnoreBeaten" :style="toggleIgnoreBeatenButtonStyles" small
+        dark />
     </div>
   </div>
 </template>
@@ -25,24 +26,37 @@ export default {
   computed: {
     setFavesButtonStyles() {
       return [
-        {'background-color': `var(--${BossboardPalette.colour7})`},
-        {'color': `var(--${BossboardPalette.colour7})`}
-       // {'box-shadow': `0px 0px 4px 3px var(--${BossboardPalette.colour7}))`}
+        { 'background-color': `var(--${BossboardPalette.chosenPalette}${this.eldenplayer.primaryColourNum})` },
+        { 'color': `var(--${BossboardPalette.colour7})` }
+        // {'box-shadow': `0px 0px 4px 3px var(--${BossboardPalette.colour7}))`}
       ];
     },
     togglePreventRerollsButtonStyles() {
-    const styles = [
-      {'background-color': `var(--${BossboardPalette.colour7})`},
-      {'color': `var(--${BossboardPalette.colour7}`},
-      {'box-shadow': `0px 0px 0px 0px var(--${BossboardPalette.colour7})`}
-    ];
+      const styles = [
+        { 'background-color': `var(--${BossboardPalette.chosenPalette}${this.eldenplayer.primaryColourNum})` },
+        { 'color': `var(--${BossboardPalette.colour7}` },
+        { 'box-shadow': `0px 0px 0px 0px var(--${BossboardPalette.colour7})` }
+      ];
 
-    if (this.eldenplayer.preventRerolls) {
-      styles.push({'box-shadow': `0 0 4px 3px var(--${BossboardPalette.colour7})`});
+      if (this.eldenplayer.preventRerolls) {
+        styles.push({ 'box-shadow': `0 0 4px 3px var(--${BossboardPalette.colour7})` });
+      }
+
+      return styles;
+    },
+    toggleIgnoreBeatenButtonStyles() {
+      const styles = [
+        { 'background-color': `var(--${BossboardPalette.chosenPalette}${this.eldenplayer.primaryColourNum})` },
+        { 'color': `var(--${BossboardPalette.colour7}` },
+        { 'box-shadow': `0px 0px 0px 0px var(--${BossboardPalette.colour7})` }
+      ];
+
+      if (this.eldenplayer.ignoreBeaten) {
+        styles.push({ 'box-shadow': `0 0 4px 3px var(--${BossboardPalette.colour7})` });
+      }
+
+      return styles;
     }
-
-    return styles;
-  }
   },
   methods: {
     nameClick() {
@@ -51,11 +65,11 @@ export default {
     setFaves() {
       this.$emit("set-faves")
     },
-        setUnbeaten() {
-      this.$emit("set-unbeaten")
-    },
     togglePreventRerolls() {
       this.eldenplayer.preventRerolls = !this.eldenplayer.preventRerolls;
+    },
+    toggleIgnoreBeaten() {
+      this.eldenplayer.ignoreBeaten = !this.eldenplayer.ignoreBeaten;
     }
   }
 }
@@ -70,7 +84,7 @@ export default {
   gap: 20px;
   position: relative; // Add this line
 
-  > span {
+  >span {
     display: flex;
     gap: 8px;
     justify-content: center;
@@ -94,7 +108,7 @@ export default {
   margin-top: auto;
 }
 
-.set-unbeaten-btn {
+.toggle-ignore-btn {
   align-self: center;
   margin-top: auto;
 }
@@ -112,7 +126,7 @@ export default {
   gap: 8px;
   align-items: center;
 
-  > div {
+  >div {
     display: flex;
     align-items: center;
     gap: 8px;

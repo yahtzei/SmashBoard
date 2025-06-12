@@ -1,8 +1,8 @@
 <template>
-  <div class="v-bossboard-background" :style="bossboardStyles" >
+  <div class="v-bossboard-background" :style="bossboardStyles">
     <div class="v-bossboard">
       <v-bossplate class="boss-roster" :eldenplayer="playerOne" @name-click="rollTheDie(playerOne)"
-        @set-faves="playerOne.resetMains()" @set-unbeaten="playerOne.setUnbeaten()" />
+        @set-faves="playerOne.resetMains()" />
       <div class="middle-panel">
         <v-button @click="rollTheDice" :icon="isRolling ? 'spinner' : 'refresh'" :disabled="noMains || isRolling"
           dark />
@@ -14,7 +14,7 @@
         </div>
       </div>
       <v-bossplate class="boss-roster" :eldenplayer="playerTwo" @name-click="rollTheDie(playerTwo)"
-        @set-faves="playerTwo.resetMains()" @set-unbeaten="playerOne.setUnbeaten()"/>
+        @set-faves="playerTwo.resetMains()" />
     </div>
   </div>
 </template>
@@ -43,21 +43,48 @@ export default {
       let activeMainIndex = 0;
       const countTo = 60 + randomMainIndex
       let counter = Math.floor(Math.random() * eldenplayer.mains.length);
-
+      const isRollBeaten = (eldenplayer.lastRoll && eldenplayer.hasBeaten(eldenplayer.lastRoll));
+      
       const spin = () => {
         activeMainIndex = counter % eldenplayer.mains.length;
         eldenplayer.activeBoss = eldenplayer.mains[activeMainIndex];
+        const doesLastRollExistInBeaten = eldenplayer.beaten.some(beatenBoss => {return beatenBoss.name === eldenplayer.activeBoss.name;})
 
         if (counter === countTo) {
           this.isRolling = false;
+          
+          //if preventRerolls AND ignoreBeaten
+          if (eldenplayer.lastRoll === eldenplayer.activeBoss.name && eldenplayer.preventRerolls
+          && eldenplayer.beaten.some(beatenBoss => beatenBoss.name === eldenplayer.activeBoss.name) && eldenplayer.ignoreBeaten && eldenplayer.mains.length > 1) {
+            this.rollTheDie(eldenplayer);
+            console.log("1")
+            console.log(eldenplayer.lastRoll,eldenplayer.activeBoss.name,eldenplayer.preventRerolls, eldenplayer.beaten, eldenplayer.ignoreBeaten)
+            return;
+          }
+
+          //if just preventRerolls
+          if (eldenplayer.lastRoll === eldenplayer.activeBoss.name && eldenplayer.preventRerolls && eldenplayer.mains.length > 1) {
+            this.rollTheDie(eldenplayer);
+            console.log("2")
+            console.log(eldenplayer.lastRoll,eldenplayer.activeBoss.name,eldenplayer.preventRerolls, eldenplayer.beaten, eldenplayer.ignoreBeaten)
+            return;
+          }
+
+          //if just ignoreBeaten
+            if (eldenplayer.beaten.some(beatenBoss => beatenBoss.name === eldenplayer.activeBoss.name) && eldenplayer.ignoreBeaten && eldenplayer.mains.length > 1) {
+            this.rollTheDie(eldenplayer);
+            console.log("3")
+            console.log(eldenplayer.lastRoll,eldenplayer.activeBoss.name,eldenplayer.preventRerolls, eldenplayer.beaten, eldenplayer.ignoreBeaten)
+            return;
+          }
 
           if (eldenplayer.lastRoll === eldenplayer.activeBoss.name && eldenplayer.preventRerolls && eldenplayer.mains.length > 1) {
             this.rollTheDie(eldenplayer);
+            console.log("4")
             return;
           }
 
           eldenplayer.lastRoll = eldenplayer.activeBoss.name;
-
           return;
         }
 
@@ -76,9 +103,9 @@ export default {
     noMains() {
       return this.playerOne.mains.length === 0 || this.playerTwo.mains.length === 0;
     },
-  
 
-  bossboardStyles() {
+
+    bossboardStyles() {
 
       return {
         'color': `var(--${BossboardPalette.colour1})`,
@@ -101,7 +128,7 @@ export default {
 .v-bossboard-background {
   height: 100%;
   width: 100%;
-
+  // transition: background-color 200ms ease-in-out;
 }
 
 .boss-roster {

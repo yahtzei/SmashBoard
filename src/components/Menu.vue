@@ -5,12 +5,9 @@
     </div>
     <dialog ref="menuModal" class="menu-modal" v-click-outside="closeMenu">
       <div>
+        <v-button dark @click="goToPage('/')">DICELIST</v-button>
         <v-button dark @click="goToPage('smashboard')">SMASH</v-button>
-        <div class="boss-button-div"> <v-button dark @click="goToPage('bossboard')">BOSS</v-button>
-          <div dark v-if="$route.path === '/bossboard'">
-            <v-button dark @click="showSubMenu(); closeMenu()">Skins</v-button>
-          </div>
-        </div>
+        <v-button dark @click="goToPage('bossboard')">BOSS</v-button>
         <v-button dark @click="goToPage('flex')">FLEX</v-button>
         <v-button class="reset" icon="heartbeat" @click="reset" negative xsmall />
       </div>
@@ -18,17 +15,21 @@
     </dialog>
     <dialog ref="subMenuModal" class="sub-menu-modal" v-click-outside="closeSubMenu">
       <div>
-        <v-button dark @click="palette.setPalette('liurnia'); closeSubMenu()">Liurnia</v-button>
-        <v-button dark @click="palette.setPalette('limgrave'); closeSubMenu()">Limgrave</v-button>
-        <v-button dark @click="palette.setPalette('altusplateau'); closeSubMenu()">Altus Plateau</v-button>
-        <v-button dark @click="palette.setPalette('caelid'); closeSubMenu()">Caelid</v-button>
-        <v-button dark @click="palette.setPalette('mtgelmir'); closeSubMenu()">Mt Gelmir</v-button>
-        <v-button dark @click="palette.setPalette('cave'); closeSubMenu()">Cave</v-button>
-        <v-button dark @click="palette.setPalette('liurniaB'); closeSubMenu()">Liurnia (Alternate)</v-button>
-        <v-button dark @click="palette.setPalette('limgraveB'); closeSubMenu()">Limgrave (Alternate)</v-button>
+        <v-button dark @mouseover="palette.setPalette('liurnia')" @click="palette.setPalette('liurnia'); closeSubMenu()">Liurnia</v-button>
+        <v-button dark @mouseover="palette.setPalette('limgrave')" @click="palette.setPalette('limgrave'); closeSubMenu()">Limgrave</v-button>
+        <v-button dark @mouseover="palette.setPalette('altusplateau')" @click="palette.setPalette('altusplateau'); closeSubMenu()">Altus Plateau</v-button>
+        <v-button dark @mouseover="palette.setPalette('caelid')" @click="palette.setPalette('caelid'); closeSubMenu()">Caelid</v-button>
+        <v-button dark @mouseover="palette.setPalette('mtgelmir')" @click="palette.setPalette('mtgelmir'); closeSubMenu()">Mt Gelmir</v-button>
+        <v-button dark @mouseover="palette.setPalette('cave')" @click="palette.setPalette('cave'); closeSubMenu()">Cave</v-button>
+        <v-button dark @mouseover="palette.setPalette('liurniaB')" @click="palette.setPalette('liurniaB'); closeSubMenu()">Liurnia (Alternate)</v-button>
+        <v-button dark @mouseover="palette.setPalette('limgraveB')" @click="palette.setPalette('limgraveB'); closeSubMenu()">Limgrave (Alternate)</v-button>
       </div>
     </dialog>
+      <div> 
+    <v-button v-if="$route.path === '/bossboard'" class="skins-button" icon="edit" @click="showSubMenu(); closeMenu()" dark xsmall></v-button>
+</div>
   </div>
+
 </template>
 
 <script>
@@ -162,5 +163,12 @@ export default {
 .boss-button-div {
   display: flex;
   flex-direction: row;
+}
+
+.skins-button {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  transform: translate(15%,15%);
 }
 </style>

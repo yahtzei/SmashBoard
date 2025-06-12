@@ -1,5 +1,5 @@
 <template>
-  <div class="v-boss" :style="activeBossStyles" @click="toggleMain(boss)">
+  <div :class="this.eldenplayer.hasBeaten(boss.name) ? 'v-beaten-boss' : 'v-boss'" :style="activeBossStyles" @click="toggleMain(boss)">
     <img class="bossImg" :src="boss.iconPath" />
     <span class="name">{{ boss.name }}</span>
     <button type="button" :class="['favourite', { 'active': eldenplayer.hasFave(boss) }]" :style="favouriteBossStyles"
@@ -32,7 +32,7 @@ export default {
       if (!this.selectable) return;
       this.eldenplayer.toggleMain(boss)
       this.$emit("selected")
-      
+
     }
   },
   computed: {
@@ -44,39 +44,38 @@ export default {
     },
     activeBossStyles() {
       if (this.eldenplayer.activeBoss?.name !== this.boss.name) return {
-        'background-color': `var(--${BossboardPalette.colour2})`,
-        'color': `var(--${BossboardPalette.colour7})`
+        'background-color': `var(--${BossboardPalette.chosenPalette}${this.eldenplayer.secondaryColourNum})`,
+        'color': `var(--${BossboardPalette.chosenPalette}${this.eldenplayer.primaryColourNum})`
       };
 
       return {
-        // 'background-color': `var(--${this.eldenplayer.colour}-light)`,
-        // 'color': `var(--${this.eldenplayer.colour}-dark)`,
-        // 'box-shadow': `0px 0px 8px 3px var(--${this.eldenplayer.colour}-primary)`,
-        'background-color': `var(--${BossboardPalette.chosenPalette}${this.eldenplayer.defaultColourNum}`,
-        //'background-color': `var(--${this.player.colour}-light)`
+        'background-color': `var(--${BossboardPalette.chosenPalette}${this.eldenplayer.primaryColourNum})`,
         'color': `var(--${BossboardPalette.colour1})`,
         'box-shadow': `var(--${BossboardPalette.colour1})`
       };
     },
     favouriteBossStyles() {
       if (!this.eldenplayer.hasFave(this.boss)) return "";
-
+      if (this.eldenplayer.hasBeaten(this.boss)) return {
+      //'color': `var(--${this.eldenplayer.colour}-primary)`
+      'color': `var(--${this.palette}6)`
+    };
       return {
-        //'color': `var(--${this.eldenplayer.colour}-primary)`
-        'color': `var(--${this.palette}6)`
+      //'color': `var(--${this.eldenplayer.colour}-primary)`
+      'color': `var(--${this.palette}6)`
 
-      };
-    },
-    beatenBossStyles() {
-      if (!this.eldenplayer.hasBeaten(this.boss)) return "";
+    };
+  },
+  beatenBossStyles() {
+    if (!this.eldenplayer.hasBeaten(this.boss)) return "";
 
-      return {
-        // 'color': `var(--${this.eldenplayer.colour}-primary)`
-        'color': `var(--${this.palette}6)`
+    return {
+      // 'color': `var(--${this.eldenplayer.colour}-primary)`
+      'color': `var(--${this.palette}1)`
 
-      };
-    }
+    };
   }
+}
 }
 </script>
 
@@ -90,11 +89,30 @@ export default {
   padding-right: 12px;
   max-height: 400px;
   max-width: 400px;
-  background-color: white;
   cursor: pointer;
 
   &:hover {
     background-color: var(--greyscale-90);
+
+    .favourite {
+      opacity: 1;
+    }
+  }
+}
+
+.v-beaten-boss {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 8px;
+  padding-right: 112px;
+  max-height: 400px;
+  max-width: 400px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--greyscale-70);
 
     .favourite {
       opacity: 1;

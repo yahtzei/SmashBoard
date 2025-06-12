@@ -86,4 +86,3 @@ const BOSS_DATA = [
 { name: 'Fissure in the Fog'  },
 { name: 'Night Aspect'  },
 ];
-

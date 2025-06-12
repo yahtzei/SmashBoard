@@ -10,7 +10,7 @@ const BossRoster = BOSS_DATA.map((boss) => {
   return new Boss(boss.name)
 });
 
-const EP1 = new EldenPlayer("P1", "red", 7);
-const EP2 = new EldenPlayer("P2", "blue", 8);
+const EP1 = new EldenPlayer("P1", "red", 7, 2);
+const EP2 = new EldenPlayer("P2", "blue", 8, 6);
 
 const BossboardPalette = new Palette("bossboard");

@@ -59,7 +59,7 @@
   --negative-outline: 0px 0px 0px 2px rgba(207, 23, 56, 0.20);
   --positive-outline: 0px 0px 0px 2px rgba(45, 133, 74, 0.20);
   --outline-button-secondary: inset 0px 0px 0px 1px var(--greyscale-0);
-  /*--elden ring colours copied from https://www.reddit.com/r/Eldenring/comments/sxmb29/elden_ring_colors_charts/*/
+  /*--elden ring colours copied from https://www.reddit.com/r/Eldenring/comments/sxmb29/elden_ring_colors_charts/ */
   --cave1: #242650;
   --cave2: #4d318c;
   --cave3: #8878bf;
@@ -93,13 +93,13 @@
   --altusplateau7: #d9b13b;
   --altusplateau8: #bf8e34;
   --caelid1: #251a17;
-  --caelid2: #59341e;
+  --caelid2: #dea579;
   --caelid3: #59281d;
   --caelid4: #a76d3d;
-  --caelid5: #dea579;
-  --caelid6: #ca9b5d;
+  --caelid5: #59341e;
+  --caelid6: #8b463f;
   --caelid7: #f2da90;
-  --caelid8: #8b463f;
+  --caelid8: #ca9b5d;
   --liurniaB1: #161933;
   --liurniaB2: #323858;
   --liurniaB3: #555e8b;
@@ -111,10 +111,10 @@
   --limgraveB1: #2f402d;
   --limgraveB2: #a3a64a;
   --limgraveB3: #9da698;
-  --limgraveB4: #f1ebc9;
+  --limgraveB4: #d9b959;
   --limgraveB5: #bfb580;
   --limgraveB6: #4c3234;
-  --limgraveB7: #d9b959;
+  --limgraveB7: #f1ebc9;
   --limgraveB8: #80632b;
   --mtgelmir1: #261713;
   --mtgelmir2: #340c05;
@@ -139,3 +139,4 @@
 }
 
 html{color:#000;background:#e9e9e9;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{font-size:100%;}
+
