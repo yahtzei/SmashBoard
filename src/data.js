@@ -74,3 +74,15 @@ const FIGHTER_DATA = [
   { name: 'Simon' },
   { name: 'Richter' },
 ];
+
+
+const BOSS_DATA = [
+{ name: 'Tricephalos'  },
+{ name: 'Gaping Jaw'  },
+{ name: 'Sentient Pest'  },
+{ name: 'Augur'  },
+{ name: 'Equilibrious Beast'  },
+{ name: 'Darkdrift Knight'  },
+{ name: 'Fissure in the Fog'  },
+{ name: 'Night Aspect'  },
+];

@@ -1,6 +1,6 @@
 <template>
   <div v-if="$slots.default || label || icon" class="v-button">
-    <component :is="buttonType" :id="buttonId" :class="buttonClasses" type="button" :href="href" :target="linkTarget" @click="clicked($event)">
+    <component :is="buttonType" :id="buttonId" :class="buttonClasses" type="button" :href="href" :target="linkTarget" @click="clicked($event)" @mouseover="mouseOver($event)" @mouseleave="mouseLeave($event)">
       <v-icon v-if="icon" :type="icon" :size="iconSize" />
       <span v-if="$slots.default || label"><slot>{{ label }}</slot></span>
       <v-icon v-if="iconRight" :type="iconRight" :size="iconSize" />
@@ -30,6 +30,12 @@ export default {
     clicked(event) {
       if (this.buttonType === 'button' && !this.disabled) this.$emit('click', event);
     },
+    mouseOver(event) {
+      if (this.buttonType === 'button' && !this.disabled) this.$emit('mouseover', event);
+      },
+    mouseLeave(event) {
+      if (this.buttonType === 'button' && !this.disabled) this.$emit('mouseleave', event);
+      }
   },
   computed: {
     buttonType() {
@@ -89,6 +95,7 @@ export default {
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
+  outline: none;
 
   &:hover, &:active {
     height: 42px;
