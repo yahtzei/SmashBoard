@@ -26,7 +26,7 @@ export default {
     },
     removeItem(item) {
       this.diceList = this.diceList.filter(i => i.toLowerCase() !== item.toLowerCase())
-    }
+    },
     rollTheDie(eldenplayer) {
       this.isRolling = true;
       const randomMainIndex = Math.floor(Math.random() * eldenplayer.mains.length);
