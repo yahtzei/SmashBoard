@@ -328,8 +328,13 @@ class MineCell {
   }
 
   reveal(grid) {
-    console.log("reveal called")
     if (this.isRevealed || this.isFlagged) return;
+
+    if (!grid.flat().some(c => c.isRevealed)) {
+      this.isBomb = false;
+      const neighbours = this.getNeighbours(grid);
+      neighbours.forEach((item, index, array) => array[index].isBomb = false);
+    }
 
     this.isRevealed = true;
 
