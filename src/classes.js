@@ -317,3 +317,82 @@ class Palette {
   }
 }
 
+class MineCell {
+  constructor(row, col) {
+    this.row = row;
+    this.col = col;
+    this.isBomb = Math.floor(Math.random() * 6) === 0;
+    this.isRevealed = false;
+    this.isFlagged = false;
+    this.display = "";
+  }
+
+  reveal(grid) {
+    console.log("reveal called")
+    if (this.isRevealed || this.isFlagged) return;
+
+    this.isRevealed = true;
+
+    if (this.isBomb) {
+      this.display = "💣";
+      return;
+    }
+
+    const badNeighbourCount = this.countBadNeighbours(grid);
+
+    if (badNeighbourCount > 0) {
+      this.display = badNeighbourCount;
+      return;
+    }
+
+    this.revealSafeNeighbourCells(grid);
+  }
+
+  countBadNeighbours(grid) {
+    const neighbours = this.getNeighbours(grid);
+    return neighbours.filter(n => n.isBomb).length;
+  }
+
+  revealSafeNeighbourCells(grid) {
+    if (this.isBomb) return;
+
+    const neighbours = this.getNeighbours(grid);
+    const safeNeighbours = neighbours.filter(n => !n.isBomb);
+
+    safeNeighbours.forEach((n) => n.reveal(grid));
+  }
+
+  flag() {
+    const currentlyFlagged = this.isFlagged;
+    this.isFlagged = !currentlyFlagged && !this.isRevealed;
+    this.display = this.isFlagged ? "🔻" : "";
+  }
+
+  getNeighbours(grid) {
+    const neighbours = [];
+    const neighbourAddresses = [
+      { row: this.row - 1, col: this.col + 0 }, // 1. top
+      { row: this.row - 1, col: this.col + 1 }, // 2. top-right
+      { row: this.row + 0, col: this.col + 1 }, // 3. right
+      { row: this.row + 1, col: this.col + 1 }, // 4. bottom-right
+      { row: this.row + 1, col: this.col + 0 }, // 5. bottom
+      { row: this.row + 1, col: this.col - 1 }, // 6. bottom-left
+      { row: this.row + 0, col: this.col - 1 }, // 7. left
+      { row: this.row - 1, col: this.col - 1 }, // 8. top-left
+    ]
+
+    const maxRowIndex = grid.length - 1;
+    const maxColIndex = grid[0].length - 1;
+    
+    neighbourAddresses.forEach((address) => {
+      const isValidColIndex = address.col >= 0 && address.col <= maxColIndex;
+      const isValidRowIndex = address.row >= 0 && address.row <= maxRowIndex;
+
+      if (isValidColIndex && isValidRowIndex) {
+        neighbours.push(grid[address.row][address.col]);
+      }
+    });
+
+    return neighbours;
+  }
+}
