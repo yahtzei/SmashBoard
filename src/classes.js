@@ -370,7 +370,10 @@ class MineCell {
   flag() {
     const currentlyFlagged = this.isFlagged;
     this.isFlagged = !currentlyFlagged && !this.isRevealed;
-    this.display = this.isFlagged ? "🔻" : "";
+
+    if (this.isFlagged) {
+      this.display = "🔻";
+    }
   }
 
   getNeighbours(grid) {
