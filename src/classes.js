@@ -368,12 +368,10 @@ class MineCell {
   }
 
   flag() {
-    const currentlyFlagged = this.isFlagged;
-    this.isFlagged = !currentlyFlagged && !this.isRevealed;
+    if (this.isRevealed) return;
 
-    if (this.isFlagged) {
-      this.display = "🔻";
-    }
+    this.isFlagged = !this.isFlagged;
+    this.display = this.isFlagged ? "🔻" : "";
   }
 
   getNeighbours(grid) {
