@@ -17,7 +17,9 @@ import Bossplate from './components/Bossplate.vue';
 import BossRoster from './components/BossRoster.vue';
 import BossRosterModal from './components/BossRosterModal.vue';
 import Boss from './components/Boss.vue';
-
+import MineSweeper from './components/mine-sweeper/MineSweeper.vue';
+import MineBoard from './components/mine-sweeper/MineBoard.vue';
+import MineCell from './components/mine-sweeper/MineCell.vue';
 
 if (typeof Vue !== 'undefined') {
   Vue.mixin(Mixin);
@@ -38,7 +40,9 @@ if (typeof Vue !== 'undefined') {
   Vue.component('v-bossplate', Bossplate);
   Vue.component('v-bossroster', BossRoster);
   Vue.component('v-bossroster-modal', BossRosterModal);
-
+  Vue.component('v-mineboard', MineBoard);
+  Vue.component('v-minesweeper', MineSweeper);
+  Vue.component('v-minecell', MineCell);
 }
 
 Vue.use(VueRouter);
@@ -48,7 +52,8 @@ const router = new VueRouter({
     { path: '/', component: Dicelist },
     { path: '/smashboard', component: SmashBoard },
     { path: '/flex', component: FlexPlayground },
-    { path: '/bossboard', component: BossBoard }
+    { path: '/bossboard', component: BossBoard },
+    { path: '/mineboard', component: MineBoard },
   ]
 });
 

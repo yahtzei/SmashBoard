@@ -59,6 +59,10 @@
   --negative-outline: 0px 0px 0px 2px rgba(207, 23, 56, 0.20);
   --positive-outline: 0px 0px 0px 2px rgba(45, 133, 74, 0.20);
   --outline-button-secondary: inset 0px 0px 0px 1px var(--greyscale-0);
+  /*--*/
+  --mine-cell-background: #bdbdbd;
+  --mine-cell-border: #7b7b7b;
+  --mine-cell-highlight: #ffffff;
   /*--elden ring colours copied from https://www.reddit.com/r/Eldenring/comments/sxmb29/elden_ring_colors_charts/ */
   --cave1: #242650;
   --cave2: #4d318c;

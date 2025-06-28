@@ -9,6 +9,7 @@
         <v-button dark @click="goToPage('smashboard')">SMASH</v-button>
         <v-button dark @click="goToPage('bossboard')">BOSS</v-button>
         <v-button dark @click="goToPage('flex')">FLEX</v-button>
+        <v-button dark @click="goToPage('mineboard')">MINEBOARD</v-button>
         <v-button class="reset" icon="heartbeat" @click="reset" negative xsmall />
       </div>
 
