@@ -321,7 +321,7 @@ class MineCell {
   constructor(row, col) {
     this.row = row;
     this.col = col;
-    this.isBomb = Math.floor(Math.random() * 6) === 0;
+    this.isBomb = Math.floor(Math.random() * 5) === 0;
     this.isRevealed = false;
     this.isFlagged = false;
     this.display = "";
@@ -338,8 +338,14 @@ class MineCell {
 
     this.isRevealed = true;
 
-    if (this.isBomb) {
-      this.display = "💣";
+    if (this.isBomb) {      
+      const otherBombs = grid.flat().filter(n => n.isBomb);
+      otherBombs.forEach((item, index, array) => {
+        array[index].isRevealed = true;
+        array[index].display = "💣";
+      });
+
+      this.display = "💩";
       return;
     }
 
@@ -371,7 +377,7 @@ class MineCell {
     if (this.isRevealed) return;
 
     this.isFlagged = !this.isFlagged;
-    this.display = this.isFlagged ? "🔻" : "";
+    this.display = this.isFlagged ? "📍" : "";
   }
 
   getNeighbours(grid) {
