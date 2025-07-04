@@ -9,11 +9,13 @@
 <script>
 export default {
   props: {
-    cell: { type: MineCell }
+    cell: { type: MineCell },
+    fuckedUpMode: { type: Boolean }
   },
   computed: {
     classes() {
       return [
+        { 'fucked-up-mode': this.fuckedUpMode },
         { 'revealed': this.cell.isRevealed },
         { 'flagged': this.cell.isFlagged },
         { 'womp-womp': this.cell.display == "💩" },
@@ -52,6 +54,10 @@ export default {
   &.revealed {
     border: none;
     outline: 1px solid var(--mine-cell-border);
+
+    &.fucked-up-mode {
+      animation: fuck-my-shit-up 1500ms;
+    }
   }
 
   &.bad-neighbours {
@@ -88,6 +94,31 @@ export default {
 
   &.n-eight {
     color: #7b7b7b;
+  }
+}
+
+@keyframes fuck-my-shit-up {
+  0% {
+    
+  }
+
+  25% {
+    filter: hue-rotate(180deg) brightness(90%) blur(2px) saturate(150%);
+    transform: scale(0.75);
+  }
+
+  50% {
+    filter: hue-rotate(360deg) brightness(120%) blur(4px) saturate(200%);
+    transform: scale(1.5);
+  }
+
+  75% {
+    filter: hue-rotate(180deg) brightness(105%) blur(2px) saturate(150%);
+    transform: scale(0.8);
+  }
+
+  100% {
+    
   }
 }
 </style>
