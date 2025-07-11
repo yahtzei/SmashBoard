@@ -356,11 +356,6 @@ class MineCell {
     }
 
     setTimeout(() => this.revealSafeNeighbourCells(grid), 30);
-    const self = this;
-
-    setTimeout(() => {
-      self.revealSafeNeighbourCells(grid);
-    }, 10);
   }
 
   countBadNeighbours(grid) {

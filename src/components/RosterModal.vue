@@ -1,6 +1,10 @@
 <template>
   <div class="v-roster-modal">
-    <v-button @click="showSelectionModal" icon="plus" primary xsmall />
+    <v-button @click="showSelectionModal" 
+      icon="plus" 
+      :negative="player.name === 'P1'"
+      :primary="player.name === 'P2'" 
+      xsmall />
     <dialog ref="selectionModal" class="selection-modal" v-click-outside="closeSelectionModal">
       <div class="modal-top">
         <span class="player-name">{{ player.name }}</span>
