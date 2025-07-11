@@ -1,13 +1,19 @@
 <template>
   <div class="v-minesweeper">
     <div class="game-config">
+      <label>bomb rate (1/x): <input type="number" v-model.number="bombRate" :min="1" /></label>
       <label>rows: <input type="number" v-model.number="rows" :min="1" /></label>
       <v-button icon="refresh" small @click="createGrid" />
       <label>columns: <input type="number" v-model.number="cols" :min="1" /></label>
+      <label>fucked-up mode: <input type="checkbox" v-model="fuckedUpMode" /></label>
     </div>
     <div class="game-grid">
       <div class="grid-row" v-for="(row, r) in grid" :key="r">
-        <v-minecell v-for="(cell, c) in row" :key="`${r}-${c}`" :cell="cell" @reveal="cell.reveal(grid)" @flag="cell.flag()" />
+        <v-minecell v-for="(cell, c) in row" :key="`${r}-${c}`" 
+          :fucked-up-mode="fuckedUpMode"
+          :cell="cell" 
+          @reveal="cell.reveal(grid)" 
+          @flag="cell.flag()" />
       </div>
     </div>
   </div>
@@ -18,7 +24,9 @@ export default {
   data() {
     return {
       rows: 15,
-      cols: 20,
+      cols: 21,
+      bombRate: 5,
+      fuckedUpMode: false,
       grid: null
     }
   },
@@ -33,21 +41,26 @@ export default {
         this.$set(this.grid, row, new Array(this.cols));
 
         for (let col = 0; col < this.cols; col++) {
-          this.$set(this.grid[row], col, new MineCell(row, col));
+          this.$set(this.grid[row], col, new MineCell(row, col, this.bombRate));
         }
       }
     },
   },
   watch: {
-    size() {
-      this.createGrid();
-    },
     rows() {
       this.createGrid();
     },
     cols() {
       this.createGrid();
     },
+    bombRate() {
+      this.createGrid();
+    },
+    fuckedUpMode() {
+      this.rows = this.fuckedUpMode ? 35 : 15;
+      this.cols = this.fuckedUpMode ? 60 : 21;
+      this.bombRate = this.fuckedUpMode ? 12 : 5;
+    }
   }
 }
 </script>

@@ -317,10 +317,10 @@ class Palette {
 }
 
 class MineCell {
-  constructor(row, col) {
+  constructor(row, col, bombRate = 5) {
     this.row = row;
     this.col = col;
-    this.isBomb = Math.floor(Math.random() * 5) === 0;
+    this.isBomb = Math.floor(Math.random() * bombRate) === 0;
     this.isRevealed = false;
     this.isFlagged = false;
     this.display = "";
@@ -355,6 +355,7 @@ class MineCell {
       return;
     }
 
+    setTimeout(() => this.revealSafeNeighbourCells(grid), 30);
     const self = this;
 
     setTimeout(() => {
