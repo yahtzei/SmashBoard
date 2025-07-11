@@ -1,80 +1,79 @@
 <template>
   <div class="v-dicelist">
-    <div class="input-zone">
-      <input v-model="itemToAdd" class="input-box"/>
-      <v-button icon="plus" @click="addItem" class="input-box">Add-button</v-button>
+    <div class="active-item">
+      {{ activeItem ? activeItem : 'What shall we do today?' }}
     </div>
-    <div v-for="item in diceList">
-      <span>{{ item }}</span> <v-button icon="close" @click="removeItem(item)" />
+    <v-button v-if="!isRolling && containsWord('smash')" dark @click="goToPage('smashboard')">Take me to
+      Smashboard</v-button>
+    <v-button :icon="isRolling ? 'spinner' : 'refresh'" @click="rollTheDie" class="input-zone" dark></v-button>
+    <div class="input-zone">
+      <input v-model="itemToAdd" @keydown.enter="addItem" class="input-box" />
+    </div>
+    <div v-for="(item, idx) in diceList" :key="idx" class="dicelist-items">
+      <template v-if="editIndex === idx">
+        <input v-model="editValue" @blur="saveEdit(idx)" @keydown.enter="saveEdit(idx)" @keydown.esc="cancelEdit"
+          class="input-box" autofocus />
+      </template>
+      <template v-else>
+        <span :style="{ animationDuration: item === activeItem ? '0.5s' : '30s' }" @dblclick="startEdit(idx, item)">
+          {{ item }} <v-button icon="close" @click="removeItem(item)" negative xsmall />
+         </span>
+      </template>
     </div>
   </div>
 </template>
-
 
 <script>
 export default {
   data() {
     return {
       diceList: [],
-      itemToAdd: ""
+      isRolling: false,
+      itemToAdd: "",
+      activeItem: "",
+      editIndex: null,
+      editValue: ""
     }
+  },
+  mounted() {
+    this.loadData();
   },
   methods: {
     addItem() {
-      this.diceList.push(this.itemToAdd);
+      this.diceList.splice(0, 0, this.itemToAdd);
       this.itemToAdd = "";
     },
     removeItem(item) {
       this.diceList = this.diceList.filter(i => i.toLowerCase() !== item.toLowerCase())
     },
-    rollTheDie(eldenplayer) {
+    startEdit(idx, item) {
+      this.editIndex = idx;
+      this.editValue = item;
+    },
+    saveEdit(idx) {
+      if (this.editValue.trim()) {
+        this.$set(this.diceList, idx, this.editValue.trim());
+      }
+      this.editIndex = null;
+      this.editValue = "";
+    },
+    cancelEdit() {
+      this.editIndex = null;
+      this.editValue = "";
+    },
+    rollTheDie() {
       this.isRolling = true;
-      const randomMainIndex = Math.floor(Math.random() * eldenplayer.mains.length);
+      const randomMainIndex = Math.floor(Math.random() * this.diceList.length);
       let activeMainIndex = 0;
       const countTo = 60 + randomMainIndex
-      let counter = Math.floor(Math.random() * eldenplayer.mains.length);
-      const isRollBeaten = (eldenplayer.lastRoll && eldenplayer.hasBeaten(eldenplayer.lastRoll));
-      
+      let counter = Math.floor(Math.random() * this.diceList.length);
+
       const spin = () => {
-        activeMainIndex = counter % eldenplayer.mains.length;
-        eldenplayer.activeBoss = eldenplayer.mains[activeMainIndex];
-        const doesLastRollExistInBeaten = eldenplayer.beaten.some(beatenBoss => {return beatenBoss.name === eldenplayer.activeBoss.name;})
+        activeMainIndex = counter % this.diceList.length;
+        this.activeItem = this.diceList[activeMainIndex];
 
         if (counter === countTo) {
           this.isRolling = false;
-          
-          //if preventRerolls AND ignoreBeaten
-          if (eldenplayer.lastRoll === eldenplayer.activeBoss.name && eldenplayer.preventRerolls
-          && eldenplayer.beaten.some(beatenBoss => beatenBoss.name === eldenplayer.activeBoss.name) && eldenplayer.ignoreBeaten && eldenplayer.mains.length > 1) {
-            this.rollTheDie(eldenplayer);
-            console.log("1")
-            console.log(eldenplayer.lastRoll,eldenplayer.activeBoss.name,eldenplayer.preventRerolls, eldenplayer.beaten, eldenplayer.ignoreBeaten)
-            return;
-          }
-
-          //if just preventRerolls
-          if (eldenplayer.lastRoll === eldenplayer.activeBoss.name && eldenplayer.preventRerolls && eldenplayer.mains.length > 1) {
-            this.rollTheDie(eldenplayer);
-            console.log("2")
-            console.log(eldenplayer.lastRoll,eldenplayer.activeBoss.name,eldenplayer.preventRerolls, eldenplayer.beaten, eldenplayer.ignoreBeaten)
-            return;
-          }
-
-          //if just ignoreBeaten
-            if (eldenplayer.beaten.some(beatenBoss => beatenBoss.name === eldenplayer.activeBoss.name) && eldenplayer.ignoreBeaten && eldenplayer.mains.length > 1) {
-            this.rollTheDie(eldenplayer);
-            console.log("3")
-            console.log(eldenplayer.lastRoll,eldenplayer.activeBoss.name,eldenplayer.preventRerolls, eldenplayer.beaten, eldenplayer.ignoreBeaten)
-            return;
-          }
-
-          if (eldenplayer.lastRoll === eldenplayer.activeBoss.name && eldenplayer.preventRerolls && eldenplayer.mains.length > 1) {
-            this.rollTheDie(eldenplayer);
-            console.log("4")
-            return;
-          }
-
-          eldenplayer.lastRoll = eldenplayer.activeBoss.name;
           return;
         }
 
@@ -86,12 +85,30 @@ export default {
       };
 
       spin();
+    },
+    containsWord(word) {
+      return (
+        this.activeItem &&
+        this.activeItem.toLowerCase().includes(word.toLowerCase())
+      );
+    },
+    goToPage(path) {
+      this.$router.push({ path });
+    },
+    saveData() {
+      localStorage.setItem('dicelist', JSON.stringify(this.diceList));
+    },
+    loadData() {
+      this.diceList = JSON.parse(localStorage.getItem('dicelist')) || [];
+    }
+  },
+  watch: {
+    diceList() {
+      this.saveData();
     }
   }
 }
-
 </script>
-
 
 <style lang="scss" scoped>
 .v-dicelist {
@@ -100,26 +117,79 @@ export default {
   flex-direction: column;
   align-items: center;
   padding-top: 5%;
+  gap: 16px;
 }
 
-.input-zone {
-  display: flex;
-  flex-basis: 50%;
-  flex-direction: row;
-  align-items: center;
-  //padding-top: 5%;
-}
-
-.input-box {
+.dicelist-items {
   display: flex;
   flex-basis: 50%;
   min-height: 50px;
   flex-direction: row;
   align-items: center;
-  //padding-top: 5%;
+  font-size: 40px;
+
+  span {
+    font-size: 40px;
+    min-width: 500px;
+    border: 1px solid var(--greyscale-20);
+    border-radius: 8px;
+    background-color: var(--greyscale-10);
+    text-align: center;
+    position: relative;
+    padding: 16px 24px;
+  }
+
+  .v-button {
+    position: absolute;
+    right: -12px;
+    top: -12px;
+    transform: scale(0.8);
+  }
+}
+
+.input-zone {
+  display: flex;
+  flex-basis: 50%;
+  min-height: 50px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.input-box {
+  display: flex;
+  flex-basis: 30%;
+  min-height: 30px;
+  flex-direction: row;
+  align-items: center;
+  font-size: 40px;
+  background-color: #16161f;
+  padding: 8px;
+  text-align: center ;
+}
+
+.active-item {
+  display: flex;
+  flex-basis: 50%;
+  min-height: 50px;
+  flex-direction: row;
+  align-items: center;
+  font-size: 50px;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  margin-bottom: 20px;
+}
+
+@keyframes color-cycle {
+  0% { color: #FBAF00; }
+  20% { color: #FFD639; }
+  40% { color: #FFA3AF; }
+  60% { color: #007CBE; }
+  80% { color: #00AF54; }
+  100% { color: #FBAF00; }
 }
 
 * {
-  color: red;
+  animation: color-cycle 30s infinite ease-in;
+  font-weight: bold;
 }
 </style>

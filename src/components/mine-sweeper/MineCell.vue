@@ -48,6 +48,14 @@ export default {
   border: 4px solid var(--mine-cell-border);
   border-top-color: var(--mine-cell-highlight);
   border-left-color: var(--mine-cell-highlight);
+  //transition: all 1000ms ease-in-out;
+
+  &:hover{
+    //transform: scale(19);
+    
+  }
+
+
 
   &.revealed {
     border: none;

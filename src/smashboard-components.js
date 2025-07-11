@@ -18,7 +18,7 @@ import BossRoster from './components/BossRoster.vue';
 import BossRosterModal from './components/BossRosterModal.vue';
 import Boss from './components/Boss.vue';
 import MineSweeper from './components/mine-sweeper/MineSweeper.vue';
-import MineBoard from './components/mine-sweeper/MineBoard.vue';
+import MineBoard from './components/mine-sweeper/Mineboard.vue';
 import MineCell from './components/mine-sweeper/MineCell.vue';
 
 if (typeof Vue !== 'undefined') {

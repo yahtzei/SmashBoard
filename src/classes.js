@@ -274,7 +274,6 @@ class EldenPlayer {
 
 }
 
-
 class Palette {
   constructor(screen) {
     this.screenName = screen;
@@ -356,7 +355,11 @@ class MineCell {
       return;
     }
 
-    this.revealSafeNeighbourCells(grid);
+    const self = this;
+
+    setTimeout(() => {
+      self.revealSafeNeighbourCells(grid);
+    }, 10);
   }
 
   countBadNeighbours(grid) {
@@ -370,7 +373,7 @@ class MineCell {
     const neighbours = this.getNeighbours(grid);
     const safeNeighbours = neighbours.filter(n => !n.isBomb);
 
-    safeNeighbours.forEach((n) => n.reveal(grid));
+    safeNeighbours.forEach(n => n.reveal(grid));
   }
 
   flag() {

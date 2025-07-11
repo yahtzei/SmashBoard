@@ -17,8 +17,8 @@
 export default {
   data() {
     return {
-      cols: 10,
-      rows: 10,
+      rows: 15,
+      cols: 20,
       grid: null
     }
   },
@@ -70,7 +70,7 @@ export default {
 .game-config {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px;
 
   label {
