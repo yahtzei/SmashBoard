@@ -123,7 +123,7 @@ export default {
 .menu-modal {
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -169%);
+  transform: translate(-50%, -50%);
   border: none;
   background-color: transparent;
   animation: drop-down 0.25s ease-out;
@@ -141,9 +141,7 @@ export default {
 
   @keyframes drop-down {
   0% {   transform: translate(-50%,-270%) }
-  90% {  transform: translate(-50%,-167%) }
-  
-
+  90% {  transform: translate(-50%,-48%) }
 }
 
 
