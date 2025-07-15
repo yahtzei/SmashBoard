@@ -116,13 +116,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 5%;
+  padding-top: 3%;
   gap: 16px;
 }
 
 .dicelist-items {
   display: flex;
-  flex-basis: 50%;
+  flex-basis: 20%;
   min-height: 50px;
   flex-direction: row;
   align-items: center;
@@ -130,7 +130,8 @@ export default {
 
   span {
     font-size: 40px;
-    min-width: 500px;
+    width: 450px;
+    flex-shrink: 1;
     border: 1px solid var(--greyscale-20);
     border-radius: 8px;
     background-color: var(--greyscale-10);
@@ -177,6 +178,7 @@ export default {
   padding-top: 2%;
   padding-bottom: 2%;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 @keyframes color-cycle {

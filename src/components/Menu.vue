@@ -10,6 +10,7 @@
         <v-button dark @click="goToPage('bossboard')">BOSS</v-button>
         <v-button dark @click="goToPage('flex')">FLEX</v-button>
         <v-button dark @click="goToPage('mineboard')">MINEBOARD</v-button>
+        <v-button dark @click="goToPage('diceboard')">MULTI-DICELIST</v-button>
         <v-button class="reset" icon="heartbeat" @click="reset" negative xsmall />
       </div>
 
@@ -122,9 +123,10 @@ export default {
 .menu-modal {
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -169%);
   border: none;
   background-color: transparent;
+  animation: drop-down 0.25s ease-out;
 
   >div {
     display: flex;
@@ -136,6 +138,16 @@ export default {
     border-radius: 8px;
     background-color: var(--greyscale-10);
   }
+
+  @keyframes drop-down {
+  0% {   transform: translate(-50%,-270%) }
+  90% {  transform: translate(-50%,-167%) }
+  
+
+}
+
+
+
 }
 
 .menu-modal::backdrop {
