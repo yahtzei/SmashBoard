@@ -1,7 +1,6 @@
 <template>
   <div class="v-nameplate">
     <span @click="nameClick">{{player.name}}</span>
-    <!--<span class="name">{{ fighter.name }}</span>-->
     <div class="mains">
       <div v-for="fighter in player.mains">
         <v-fighter v-bind:fighter="fighter" :fighter="fighter" :player="player" />
@@ -10,8 +9,13 @@
       <v-roster-modal :player="player" />
     </div>
     <div class="set-faves-container">
-      <v-button class="set-faves-btn" icon="mask-happy" @click="setFaves" :style="setFavesButtonStyles" small dark />
-      <v-button class="set-faves-btn" icon="search-history" @click="togglePreventRerolls" :style="togglePreventRerollsButtonStyles" small dark />
+      <v-button class="set-faves-btn" 
+        icon="heart" 
+        @click="setFaves" 
+        :negative="player.name === 'P1'" 
+        :primary="player.name === 'P2'" 
+        small />
+      <v-toggle v-model="player.preventRerolls">Prevent re-rolls</v-toggle>
     </div>
   </div>
 </template>
@@ -21,37 +25,12 @@ export default {
   props: {
     player: { type: Player }
   },
-  computed: {
-    setFavesButtonStyles() {
-      return [
-        {'background-color': `var(--${this.player.colour}-light)`},
-        {'color': `var(--${this.player.colour}-dark)`},
-        {'box-shadow': `0px 0px 4px 3px var(--${this.player.colour}-primary)`}
-      ];
-    },
-    togglePreventRerollsButtonStyles() {
-    const styles = [
-      {'background-color': `var(--${this.player.colour}-light)`},
-      {'color': `var(--${this.player.colour}-dark)`},
-      {'box-shadow': `0px 0px 0px 0px var(--${this.player.colour}-primary)`}
-    ];
-
-    if (this.player.preventRerolls) {
-      styles.push({'box-shadow': `0 0 4px 3px var(--${this.player.colour}-primary)`});
-    }
-
-    return styles;
-  }
-  },
   methods: {
     nameClick() {
       this.$emit("name-click")
     },
     setFaves() {
       this.$emit("set-faves")
-    },
-    togglePreventRerolls() {
-      this.player.preventRerolls = !this.player.preventRerolls;
     }
   }
 }
@@ -64,7 +43,7 @@ export default {
   flex-grow: 1;
   flex-shrink: 0;
   gap: 20px;
-  position: relative; // Add this line
+  position: relative;
 
   > span {
     display: flex;
@@ -92,8 +71,9 @@ export default {
 
 .set-faves-container {
   display: flex;
-  gap: 20px;
+  gap: 12px;
   align-self: center;
+  align-items: center;
   margin-top: auto;
 }
 

@@ -5,8 +5,8 @@
     <div class="child maverick"></div>
     <div id="whatever" class="child unwanted"></div>
   </div>
-  <h1>All Icons</h1>
-  <div class="icon-display-container">
+  <v-toggle v-model="showIcons">Show all icons</v-toggle>
+  <div v-if="showIcons" class="icon-display-container">
     <div v-for="iconName in allIconNames" :key="iconName" class="icon-item">
       <v-icon :type="iconName" :size="48" :colour="'#333'"></v-icon> 
       <p>{{ iconName }}</p>
@@ -22,7 +22,8 @@ export default {
   data() {
     return {
       htmlStuff: "<button>I wanna be a div</button>",
-      allIconNames: [] 
+      allIconNames: [],
+      showIcons: false
     };
   },
   created() {

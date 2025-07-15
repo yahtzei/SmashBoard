@@ -6,6 +6,7 @@ import SmashBoard from './components/SmashBoard.vue';
 import Sming from './components/Sming.vue';
 import FlexPlayground from './components/FlexPlayground.vue';
 import Button from './components/Button.vue';
+import Toggle from './components/Toggle.vue';
 import Icon from './components/Icon.vue';
 import RosterModal from './components/RosterModal.vue';
 import Nameplate from './components/Nameplate.vue';
@@ -31,6 +32,7 @@ if (typeof Vue !== 'undefined') {
   Vue.component('v-sming', Sming);
   Vue.component('v-flex-playground', FlexPlayground);
   Vue.component('v-button', Button);
+  Vue.component('v-toggle', Toggle);
   Vue.component('v-icon', Icon);
   Vue.component('v-roster-modal', RosterModal);
   Vue.component('v-nameplate', Nameplate);
