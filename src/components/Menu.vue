@@ -1,8 +1,5 @@
 <template>
   <div class="v-menu">
-    <div class="clock-container" @click="showMenu">
-      <div class="clock">{{ timeDisplay }}</div>
-    </div>
     <dialog ref="menuModal" class="menu-modal" v-click-outside="closeMenu">
       <div>
         <v-button dark @click="goToPage('/')">DICELIST</v-button>
@@ -13,23 +10,34 @@
         <v-button dark @click="goToPage('diceboard')">MULTI-DICELIST</v-button>
         <v-button class="reset" icon="heartbeat" @click="reset" negative xsmall />
       </div>
-
     </dialog>
+    <div class="clock-container" @click="showMenu">
+      <div class="clock">{{ timeDisplay }}</div>
+    </div>
     <dialog ref="subMenuModal" class="sub-menu-modal" v-click-outside="closeSubMenu">
       <div>
-        <v-button dark @mouseover="palette.setPalette('liurnia')" @click="palette.setPalette('liurnia'); closeSubMenu()">Liurnia</v-button>
-        <v-button dark @mouseover="palette.setPalette('limgrave')" @click="palette.setPalette('limgrave'); closeSubMenu()">Limgrave</v-button>
-        <v-button dark @mouseover="palette.setPalette('altusplateau')" @click="palette.setPalette('altusplateau'); closeSubMenu()">Altus Plateau</v-button>
-        <v-button dark @mouseover="palette.setPalette('caelid')" @click="palette.setPalette('caelid'); closeSubMenu()">Caelid</v-button>
-        <v-button dark @mouseover="palette.setPalette('mtgelmir')" @click="palette.setPalette('mtgelmir'); closeSubMenu()">Mt Gelmir</v-button>
-        <v-button dark @mouseover="palette.setPalette('cave')" @click="palette.setPalette('cave'); closeSubMenu()">Cave</v-button>
-        <v-button dark @mouseover="palette.setPalette('liurniaB')" @click="palette.setPalette('liurniaB'); closeSubMenu()">Liurnia (Alternate)</v-button>
-        <v-button dark @mouseover="palette.setPalette('limgraveB')" @click="palette.setPalette('limgraveB'); closeSubMenu()">Limgrave (Alternate)</v-button>
+        <v-button dark @mouseover="palette.setPalette('liurnia')"
+          @click="palette.setPalette('liurnia'); closeSubMenu()">Liurnia</v-button>
+        <v-button dark @mouseover="palette.setPalette('limgrave')"
+          @click="palette.setPalette('limgrave'); closeSubMenu()">Limgrave</v-button>
+        <v-button dark @mouseover="palette.setPalette('altusplateau')"
+          @click="palette.setPalette('altusplateau'); closeSubMenu()">Altus Plateau</v-button>
+        <v-button dark @mouseover="palette.setPalette('caelid')"
+          @click="palette.setPalette('caelid'); closeSubMenu()">Caelid</v-button>
+        <v-button dark @mouseover="palette.setPalette('mtgelmir')"
+          @click="palette.setPalette('mtgelmir'); closeSubMenu()">Mt Gelmir</v-button>
+        <v-button dark @mouseover="palette.setPalette('cave')"
+          @click="palette.setPalette('cave'); closeSubMenu()">Cave</v-button>
+        <v-button dark @mouseover="palette.setPalette('liurniaB')"
+          @click="palette.setPalette('liurniaB'); closeSubMenu()">Liurnia (Alternate)</v-button>
+        <v-button dark @mouseover="palette.setPalette('limgraveB')"
+          @click="palette.setPalette('limgraveB'); closeSubMenu()">Limgrave (Alternate)</v-button>
       </div>
     </dialog>
-      <div> 
-    <v-button v-if="$route.path === '/bossboard'" class="skins-button" icon="edit" @click="showSubMenu(); closeMenu()" dark xsmall></v-button>
-</div>
+    <div>
+      <v-button v-if="$route.path === '/bossboard'" class="skins-button" icon="edit" @click="showSubMenu(); closeMenu()"
+        dark xsmall></v-button>
+    </div>
   </div>
 
 </template>
@@ -121,12 +129,17 @@ export default {
 }
 
 .menu-modal {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  transition: top 200ms ease-out;
+  top: -500px;
+  margin-inline: auto;
   border: none;
   background-color: transparent;
-  animation: drop-down 0.25s ease-out;
+  //animation: drop-down 0.25s ease-out;
+  display: block;
+
+  &[open] {
+    top: 44px;
+  }
 
   >div {
     display: flex;
@@ -138,18 +151,10 @@ export default {
     border-radius: 8px;
     background-color: var(--greyscale-10);
   }
-
-  @keyframes drop-down {
-  0% {   transform: translate(-50%,-270%) }
-  90% {  transform: translate(-50%,-48%) }
-}
-
-
-
 }
 
 .menu-modal::backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: transparent;
 }
 
 .sub-menu-modal {
@@ -158,6 +163,7 @@ export default {
   transform: translate(-50%, -50%);
   border: none;
   background-color: transparent;
+ // animation: drop-down 0.25s ease-out;
 
   >div {
     display: flex;
@@ -180,6 +186,6 @@ export default {
   display: flex;
   position: absolute;
   justify-content: center;
-  transform: translate(15%,15%);
+  transform: translate(15%, 15%);
 }
 </style>

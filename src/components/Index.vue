@@ -24,6 +24,7 @@ export default {
   height: 100vh;
   overflow: hidden;
   background-color: var(--greyscale-0);
+  padding-inline: 8px;
 }
 
 .clock {

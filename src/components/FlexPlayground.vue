@@ -1,22 +1,22 @@
 <template>
-  <div> 
-  <div class="parent">
-    <div class="child"></div>
-    <div class="child maverick"></div>
-    <div id="whatever" class="child unwanted"></div>
-  </div>
-  <v-toggle v-model="showIcons">Show all icons</v-toggle>
-  <div v-if="showIcons" class="icon-display-container">
-    <div v-for="iconName in allIconNames" :key="iconName" class="icon-item">
-      <v-icon :type="iconName" :size="48" :colour="'#333'"></v-icon> 
-      <p>{{ iconName }}</p>
+  <div>
+    <div class="parent">
+      <div class="child"></div>
+      <div class="child maverick"></div>
+      <div id="whatever" class="child unwanted"></div>
     </div>
-  </div>
+    <v-toggle v-model="showIcons">Show all icons</v-toggle>
+    <div v-if="showIcons" class="icon-display-container">
+      <div v-for="iconName in allIconNames" :key="iconName" class="icon-item">
+        <v-icon :type="iconName" :size="48" :colour="'#333'"></v-icon>
+        <p>{{ iconName }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import IconComponentDefinition from './Icon.vue'; 
+import IconComponentDefinition from './Icon.vue';
 
 export default {
   data() {
@@ -34,7 +34,7 @@ export default {
     // Access the 'icons' data from the imported IconComponentDefinition
     // We need to call data() as it's a function that returns the data object.
     const iconDefinitions = IconComponentDefinition.data();
-    
+
     if (iconDefinitions && iconDefinitions.icons) {
       this.allIconNames = Object.keys(iconDefinitions.icons);
       console.log('Successfully retrieved icon names:', this.allIconNames);
@@ -48,49 +48,27 @@ export default {
 <style lang="scss" scoped>
 /* Your styles here */
 
-div {
+div {}
 
-}
+div div {}
 
-div div {
+div>div {}
 
-}
+.child {}
 
-div > div {
+div.child {}
 
-}
+div>div.child {}
 
-.child {
+.parent>div.child {}
 
-}
+div.parent>div.child {}
 
-div.child {
+.unwanted {}
 
-}
+.child.unwanted {}
 
-div > div.child {
-
-}
-
-.parent > div.child {
-
-}
-
-div.parent > div.child {
-  
-}
-
-.unwanted {
-
-}
-
-.child.unwanted {
-
-}
-
-.parent div#whatever {
-
-}
+.parent div#whatever {}
 
 .parent {
   display: flex;
@@ -132,10 +110,9 @@ div.parent > div.child {
   background-color: #000000;
   min-width: 120px;
   text-align: center;
-  color: #ffffff; /* White text color */
+  color: #ffffff;
+  /* White text color */
 }
 
-#twat {
-
-}
+#twat {}
 </style>

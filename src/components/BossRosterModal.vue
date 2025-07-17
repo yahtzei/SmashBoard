@@ -12,7 +12,7 @@
       </div>
       <div ref="modalBody" class="modal-body" :style="bossRosterStyles">
         <span v-show="!playerRoster.length" class="no-results">🤷‍♀️</span>
-        <v-boss v-for="boss in playerRoster" 
+        <v-boss v-for="(boss, index) in playerRoster" :key="index" 
           :eldenplayer="eldenplayer" 
           :boss="boss" @selected="bossSelected"
           selectable />

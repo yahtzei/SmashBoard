@@ -9,15 +9,15 @@
     <div class="input-zone">
       <input v-model="itemToAdd" @keydown.enter="addItem" class="input-box" />
     </div>
-    <div v-for="(item, idx) in diceList" :key="idx" class="dicelist-items">
+    <div v-for="(item, idx) in diceList" :key="idx" class="dicelist-item">
       <template v-if="editIndex === idx">
         <input v-model="editValue" @blur="saveEdit(idx)" @keydown.enter="saveEdit(idx)" @keydown.esc="cancelEdit"
           class="input-box" autofocus />
       </template>
       <template v-else>
-        <span :style="{ animationDuration: item === activeItem ? '0.5s' : '30s' }" @dblclick="startEdit(idx, item)">
+        <div :style="{ animationDuration: item === activeItem ? '0.5s' : '30s' }" @dblclick="startEdit(idx, item)">
           {{ item }} <v-button icon="close" @click="removeItem(item)" negative xsmall />
-         </span>
+        </div>
       </template>
     </div>
   </div>
@@ -112,7 +112,6 @@ export default {
 
 <style lang="scss" scoped>
 .v-dicelist {
-  flex-basis: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -120,17 +119,15 @@ export default {
   gap: 16px;
 }
 
-.dicelist-items {
+.dicelist-item {
   display: flex;
-  flex-basis: 20%;
   min-height: 50px;
   flex-direction: row;
   align-items: center;
   font-size: 40px;
 
-  span {
+  >div {
     font-size: 40px;
-    width: 450px;
     flex-shrink: 1;
     border: 1px solid var(--greyscale-20);
     border-radius: 8px;
@@ -138,6 +135,9 @@ export default {
     text-align: center;
     position: relative;
     padding: 16px 24px;
+    flex-grow: 1;
+    flex-basis: 100%;
+  
   }
 
   .v-button {
@@ -165,7 +165,7 @@ export default {
   font-size: 40px;
   background-color: #16161f;
   padding: 8px;
-  text-align: center ;
+  text-align: center;
 }
 
 .active-item {
@@ -182,12 +182,29 @@ export default {
 }
 
 @keyframes color-cycle {
-  0% { color: #FBAF00; }
-  20% { color: #FFD639; }
-  40% { color: #FFA3AF; }
-  60% { color: #007CBE; }
-  80% { color: #00AF54; }
-  100% { color: #FBAF00; }
+  0% {
+    color: #FBAF00;
+  }
+
+  20% {
+    color: #FFD639;
+  }
+
+  40% {
+    color: #FFA3AF;
+  }
+
+  60% {
+    color: #007CBE;
+  }
+
+  80% {
+    color: #00AF54;
+  }
+
+  100% {
+    color: #FBAF00;
+  }
 }
 
 * {

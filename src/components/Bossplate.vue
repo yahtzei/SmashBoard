@@ -3,8 +3,8 @@
     <span @click="nameClick">{{ eldenplayer.name }}</span>
     <!--<span class="name">{{ fighter.name }}</span>-->
     <div class="mains">
-      <div v-for="boss in eldenplayer.mains">
-        <v-boss v-bind:boss="boss" :boss="boss" :eldenplayer="eldenplayer" />
+      <div v-for="(boss, index) in eldenplayer.mains" :key="index">
+        <v-boss :boss="boss" :eldenplayer="eldenplayer" />
         <v-button @click="eldenplayer.toggleMain(boss)" icon="close" negative xsmall />
       </div>
       <v-bossroster-modal :eldenplayer="eldenplayer" />

@@ -18,6 +18,7 @@ export default defineConfig(() => {
       }
     },
     build: {
+      minify:false,
       emptyOutDir: true,
       assetsDir: 'assets',
       rollupOptions: {

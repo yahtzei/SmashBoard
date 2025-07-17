@@ -4,13 +4,12 @@
       <v-button icon="refresh" @click="rollAllDice()" dark></v-button>
     </div>
     <div class="dicelist-panel">
-      <v-dicelist v-for="n in numberOfLists" :key="n" class="v-dicelist" ref="dicelist" />
+      <v-dicelist v-for="n in numberOfLists" :key="n" ref="dicelist" />
     </div>
     <div class="plus-minus-buttons">
-      <v-button icon="plus" primary small @click="addDicelist()"></v-button>
-      <v-button icon="minus" negative small @click="removeDicelist()"></v-button>
+      <v-button icon="plus" primary small @click="addDicelist()" :disabled="numberOfLists >= 4"></v-button>
+      <v-button icon="minus" negative small @click="removeDicelist()" :disabled="numberOfLists <= 1"></v-button>
     </div>
-    
   </div>
 </template>
 
@@ -18,15 +17,15 @@
 export default {
   data() {
     return {
-      numberOfLists: 3
+      numberOfLists: 4
     }
   },
   methods: {
     addDicelist() {
-      this.numberOfLists++
+      this.numberOfLists++;
     },
     removeDicelist() {
-      this.numberOfLists--
+      this.numberOfLists--;
     },
     rollAllDice() {
       (this.$refs.dicelist || []).forEach(d => d.rollTheDie && d.rollTheDie());
@@ -57,12 +56,12 @@ export default {
   }
 }
 
-.v-dicelist {
-  flex: auto;
-  min-width: 0;
-  max-width: 100%; 
-  margin-inline: 5px;
-}
+// .v-dicelist {
+//   flex: auto;
+//   min-width: 0;
+//   max-width: 100%; 
+//   margin-inline: 5px;
+// }
 
 .plus-minus-buttons {
   position: fixed;

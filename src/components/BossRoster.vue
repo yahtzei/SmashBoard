@@ -1,6 +1,6 @@
 <template>
   <div class="v-bossroster">
-    <v-boss v-for="boss in player.bossroster" :player="player" :boss="boss" />
+    <v-boss v-for="(boss, index) in player.bossroster" :key="index" :player="player" :boss="boss" />
   </div>
 </template>
 

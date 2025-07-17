@@ -6,6 +6,7 @@
       <v-button icon="refresh" small @click="createGrid" />
       <label>columns: <input type="number" v-model.number="cols" :min="1" /></label>
       <label>fucked-up mode: <input type="checkbox" v-model="fuckedUpMode" /></label>
+      <span>bombs left to bomb:  {{ bombsLeft }}</span>
     </div>
     <div class="game-grid">
       <div class="grid-row" v-for="(row, r) in grid" :key="r">
@@ -27,7 +28,8 @@ export default {
       cols: 21,
       bombRate: 5,
       fuckedUpMode: false,
-      grid: null
+      grid: null,
+      gameStarted: false
     }
   },
   mounted() {
@@ -35,6 +37,7 @@ export default {
   },
   methods: {
     createGrid() {
+      this.gameStarted = false;
       this.grid = new Array(this.rows);
 
       for (let row = 0; row < this.rows; row++) {
@@ -44,6 +47,8 @@ export default {
           this.$set(this.grid[row], col, new MineCell(row, col, this.bombRate));
         }
       }
+
+      this.gameStarted = true;
     },
   },
   watch: {
@@ -60,6 +65,17 @@ export default {
       this.rows = this.fuckedUpMode ? 35 : 15;
       this.cols = this.fuckedUpMode ? 60 : 21;
       this.bombRate = this.fuckedUpMode ? 12 : 5;
+    }
+  },
+  computed: {
+    bombsLeft() {
+      if (!this.gameStarted) {
+        return "🍷";
+      }
+      
+      const bombCount = this.grid.flat().filter(c => c.isBomb).length; //length of the array of the cells that isBomb = true
+      const flagCount = this.grid.flat().filter(c => c.isFlagged).length; //above but for flagged
+      return bombCount - flagCount;
     }
   }
 }
@@ -86,7 +102,7 @@ export default {
   justify-content: center;
   gap: 12px;
 
-  label {
+  label,span {
     display: flex;
     flex-direction: column;
     align-items: center;
