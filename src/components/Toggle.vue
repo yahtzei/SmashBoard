@@ -48,12 +48,13 @@ export default {
 
   .v-icon {
     fill: var(--greyscale-40);
+    transition: 0.35s ease-out;
   }
 
   &:has(input:checked) {
     .v-icon {
       fill: var(--blue-dark);
-      transform: rotate(180deg);
+      transform: rotateY(540deg);
     }
   }
 

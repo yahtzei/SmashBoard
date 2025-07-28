@@ -5,9 +5,11 @@
     </div>
     <v-button v-if="!isRolling && containsWord('smash')" dark @click="goToPage('smashboard')">Take me to
       Smashboard</v-button>
-    <v-button :icon="isRolling ? 'spinner' : 'refresh'" @click="rollTheDie" class="input-zone" dark></v-button>
+    <div>
+      <v-button :icon="isRolling ? 'spinner' : 'refresh'" @click="rollTheDie" class="input-zone" dark></v-button>
+    </div>
     <div class="input-zone">
-      <input v-model="itemToAdd" @keydown.enter="addItem" class="input-box" />
+      <input v-model="itemToAdd" @keydown.enter="addItem" class="input-box" maxlength="20" />
     </div>
     <div v-for="(item, idx) in diceList" :key="idx" class="dicelist-item">
       <template v-if="editIndex === idx">
@@ -16,9 +18,12 @@
       </template>
       <template v-else>
         <div :style="{ animationDuration: item === activeItem ? '0.5s' : '30s' }" @dblclick="startEdit(idx, item)">
-          {{ item }} <v-button icon="close" @click="removeItem(item)" negative xsmall />
+          {{ item }} <v-button icon="close" @click="removeItem(idx)" negative xsmall />
         </div>
       </template>
+    </div>
+    <div>
+      <v-button class="clear-all-btn" icon="close" @click="removeAll()" dark xsmall />
     </div>
   </div>
 </template>
@@ -32,7 +37,7 @@ export default {
       itemToAdd: "",
       activeItem: "",
       editIndex: null,
-      editValue: ""
+      editValue: "",
     }
   },
   mounted() {
@@ -43,8 +48,14 @@ export default {
       this.diceList.splice(0, 0, this.itemToAdd);
       this.itemToAdd = "";
     },
-    removeItem(item) {
-      this.diceList = this.diceList.filter(i => i.toLowerCase() !== item.toLowerCase())
+    removeItem(index) {
+      this.diceList.splice(index, 1);
+      //this.diceList = this.diceList.filter(i => i.toLowerCase() !== item.toLowerCase())
+    },
+    removeAll() {
+      if (confirm("Clear list?")) {
+      this.diceList = []
+      }
     },
     startEdit(idx, item) {
       this.editIndex = idx;
@@ -65,7 +76,7 @@ export default {
       this.isRolling = true;
       const randomMainIndex = Math.floor(Math.random() * this.diceList.length);
       let activeMainIndex = 0;
-      const countTo = 60 + randomMainIndex
+      const countTo = 100 + randomMainIndex
       let counter = Math.floor(Math.random() * this.diceList.length);
 
       const spin = () => {
@@ -117,6 +128,11 @@ export default {
   align-items: center;
   padding-top: 3%;
   gap: 16px;
+
+  >div {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .dicelist-item {
@@ -137,7 +153,7 @@ export default {
     padding: 16px 24px;
     flex-grow: 1;
     flex-basis: 100%;
-  
+
   }
 
   .v-button {
@@ -210,5 +226,17 @@ export default {
 * {
   animation: color-cycle 30s infinite ease-in;
   font-weight: bold;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 20px;
+  align-self: center;
+  margin-top: auto;
+}
+
+.clear-all-btn {
+  align-self: center;
+  margin-top: auto;
 }
 </style>

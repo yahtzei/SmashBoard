@@ -11,9 +11,8 @@
     </div>
     <div class="set-faves-container">
       <v-button class="set-faves-btn" icon="mask-happy" @click="setFaves" :style="setFavesButtonStyles" small dark />
-      <v-button class="set-faves-btn" icon="search-history" @click="togglePreventRerolls" :style="togglePreventRerollsButtonStyles" small dark />
-      <v-button class="toggle-ignore-btn" icon="no-ghost" @click="toggleIgnoreBeaten" :style="toggleIgnoreBeatenButtonStyles" small
-        dark />
+      <v-toggle v-model="eldenplayer.ignoreBeaten">Ignore Beaten</v-toggle>
+      <v-toggle v-model="eldenplayer.preventRerolls">Prevent Rerolls</v-toggle>
     </div>
   </div>
 </template>

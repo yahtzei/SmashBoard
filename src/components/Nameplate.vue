@@ -1,6 +1,6 @@
 <template>
   <div class="v-nameplate">
-    <span @click="nameClick">{{player.name}}</span>
+    <span @click="nameClick">{{ player.name }}</span>
     <div class="mains">
       <div v-for="fighter in player.mains">
         <v-fighter v-bind:fighter="fighter" :fighter="fighter" :player="player" />
@@ -10,12 +10,12 @@
     </div>
     <div class="set-faves-container">
       <v-button class="set-faves-btn" 
-        icon="heart" 
-        @click="setFaves" 
-        :negative="player.name === 'P1'" 
-        :primary="player.name === 'P2'" 
-        small />
-      <v-toggle v-model="player.preventRerolls">Prevent re-rolls</v-toggle>
+      icon="heart" 
+      @click="setFaves" 
+      :negative="player.name === 'P1'" 
+      :primary="player.name === 'P2'" 
+      small />
+      <v-toggle v-model="player.preventRerolls" :style="player.name === 'P1' ? 'filter: hue-rotate(140deg)' : ''">Prevent re-rolls</v-toggle>
     </div>
   </div>
 </template>
@@ -45,7 +45,7 @@ export default {
   gap: 20px;
   position: relative;
 
-  > span {
+  >span {
     display: flex;
     gap: 8px;
     justify-content: center;
@@ -75,6 +75,7 @@ export default {
   align-self: center;
   align-items: center;
   margin-top: auto;
+
 }
 
 .mains {
@@ -83,7 +84,7 @@ export default {
   gap: 8px;
   align-items: center;
 
-  > div {
+  >div {
     display: flex;
     align-items: center;
     gap: 8px;
