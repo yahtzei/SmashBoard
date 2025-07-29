@@ -59,6 +59,8 @@ const router = new VueRouter({
     { path: '/flex', component: FlexPlayground },
     { path: '/bossboard', component: BossBoard },
     { path: '/mineboard', component: MineBoard },
+    { path: '/sming', component: Sming },
+
   ]
 });
 

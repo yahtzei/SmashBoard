@@ -53,7 +53,7 @@ export default {
       //this.diceList = this.diceList.filter(i => i.toLowerCase() !== item.toLowerCase())
     },
     removeAll() {
-      if (confirm("Clear list?")) {
+      if (confirm("Bin the whole bastard list?")) {
       this.diceList = []
       }
     },
