@@ -68,7 +68,6 @@ export default {
 
       this.isRunning = true;
       this.isPaused = false;
-console.log(this.marqueeHeight)
       let position = 0;
       let speed = 14;
       let animationId;
@@ -104,7 +103,6 @@ console.log(this.marqueeHeight)
       }, randomTime);
     }
 
-    // New manual stop method
 
   },
   computed: {
@@ -144,6 +142,7 @@ console.log(this.marqueeHeight)
   overflow: hidden;
   position: relative;
   align-items: center;
+  min-height: calc(var(--item-height) * 4);
 
   .arrow {
     transform: scale(2);
@@ -166,30 +165,12 @@ console.log(this.marqueeHeight)
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  align-items: center;
   padding-inline: 8px;
   margin: 2px;
   background-color: #7979b5;
 
 }
 
-.marquee-container {
-  min-height: calc(var(--item-height) * 4);
-  overflow: hidden;
-  position: relative;
-}
 
-.marquee-content {
-  display: flex;
-  flex-direction: column;
-}
 
-.marquee-item {
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-
-}
 </style>

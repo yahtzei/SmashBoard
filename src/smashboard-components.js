@@ -22,6 +22,8 @@ import Boss from './components/Boss.vue';
 import MineSweeper from './components/mine-sweeper/MineSweeper.vue';
 import MineBoard from './components/mine-sweeper/Mineboard.vue';
 import MineCell from './components/mine-sweeper/MineCell.vue';
+import Sandpit from './components/Sandpit.vue';
+
 
 
 if (typeof Vue !== 'undefined') {
@@ -48,6 +50,8 @@ if (typeof Vue !== 'undefined') {
   Vue.component('v-mineboard', MineBoard);
   Vue.component('v-minesweeper', MineSweeper);
   Vue.component('v-minecell', MineCell);
+  Vue.component('v-sandpit', Sandpit);
+
 }
 
 Vue.use(VueRouter);
@@ -60,6 +64,7 @@ const router = new VueRouter({
     { path: '/bossboard', component: BossBoard },
     { path: '/mineboard', component: MineBoard },
     { path: '/sming', component: Sming },
+    { path: '/sandpit', component: Sandpit },
 
   ]
 });

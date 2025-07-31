@@ -8,6 +8,7 @@
         <v-button dark @click="goToPage('flex')">FLEX</v-button>
         <v-button dark @click="goToPage('mineboard')">MINEBOARD</v-button>
         <v-button dark @click="goToPage('sming')">SMING</v-button>
+        <v-button dark @click="goToPage('sandpit')">SANDPIT</v-button>
         <v-button class="reset" icon="heartbeat" @click="reset" negative xsmall />
       </div>
     </dialog>
