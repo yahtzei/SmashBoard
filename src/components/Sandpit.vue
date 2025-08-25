@@ -13,7 +13,7 @@
     </div>
     <div class="marquee-container" :style="{ '--container-height': (itemHeight + 4) * this.diceList.length + 'px' }">
       <v-icon type="arrow-right" class="arrow" />
-      <div class="marquee-content" :class="{ paused: isPaused }">
+      <div ref="marquee" class="marquee-content" :class="{ paused: isPaused }">
         <div v-for="(item, idx) in diceList" :key="'first-' + item" class="marquee-item">
           <span>{{ item }} <v-button icon="close" @click="removeItem(idx)" negative xsmall /></span>
         </div>
@@ -150,7 +150,7 @@ export default {
         position += speed;
         if (position >= (54 * calculatedHeight)) position = 0;
 
-        const marqueeElement = this.$el.querySelector('.marquee-content');
+        const marqueeElement = this.$refs.marquee;
         marqueeElement.style.transform = `translateY(-${position}px)`;
 
         animationId = requestAnimationFrame(animate);
@@ -229,6 +229,14 @@ export default {
   flex-direction: row;
   align-items: center;
 }
+
+// .input-zone::before,
+// .input-zone::after {
+//   content: var(--sming);
+//   width: 10px;
+//   height: 10px;
+//   background-color: var(--menu-bullshit);
+// }
 
 .input-box {
   display: flex;
@@ -325,7 +333,6 @@ export default {
   display: flex;
   //height: 216px;
   flex-direction: column;
-
 }
 
 .marquee-item {

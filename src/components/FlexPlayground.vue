@@ -27,12 +27,7 @@ export default {
     };
   },
   created() {
-    // The `created()` hook runs after the component instance is created,
-    // but before it's mounted to the DOM. This is a perfect place to
-    // get static data from other component definitions.
-
-    // Access the 'icons' data from the imported IconComponentDefinition
-    // We need to call data() as it's a function that returns the data object.
+   
     const iconDefinitions = IconComponentDefinition.data();
 
     if (iconDefinitions && iconDefinitions.icons) {

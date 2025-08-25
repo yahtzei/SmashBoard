@@ -39,19 +39,23 @@ export default {
       const rollSounds = {
         1: 'src/assets/audio/wheel_spin_1.mp3',
         2: 'src/assets/audio/wheel_spin_2.mp3',
-        3: 'src/assets/audio/wheel_spin_3.mp3'
+        3: 'src/assets/audio/wheel_spin_3.mp3',
+        4: 'src/assets/audio/wheel_spin_4.mp3'
       };
 
       try {
         const random = Math.random();
         let soundChoice;
 
-        if (random < 0.45) {
+        if (random < 0.25) {
           soundChoice = 1;
-        } else if (random < 0.90) {
+        } else if (random < 0.50) {
           soundChoice = 2;
-        } else {
+        } else if (random < 0.75) {
           soundChoice = 3;
+        } 
+        else {
+          soundChoice = 4;
         }
         const audio = new Audio(rollSounds[soundChoice]);
         audio.play().catch(error => {
@@ -67,17 +71,7 @@ export default {
   },
   computed:
   {
-    muteToggleStyles() {
-      const styles = [
-        { 'box-shadow': `0px 0px 0px 0px green` }
-      ];
-
-      if (this.muted) {
-        styles.push({ 'box-shadow': `0 0 4px 3px green` });
-      }
-
-      return styles;
-    }
+    
   }
 }
 </script>
