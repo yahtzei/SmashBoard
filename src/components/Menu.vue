@@ -10,7 +10,7 @@
         <v-button dark @click="goToPage('sming')">SMING</v-button>
         <v-button dark @click="goToPage('sandpit')">SANDPIT</v-button>
         <v-button class="reset" icon="heartbeat" @click="reset" negative xsmall />
-        <div>Version 1.05</div>
+        <h2>Version 1.05</h2>
       </div>
     </dialog>
     <div class="clock-container" @click="showMenu">
@@ -189,5 +189,9 @@ export default {
   position: absolute;
   justify-content: center;
   transform: translate(15%, 15%);
+}
+
+h2 {
+  color: var(--greyscale-50);
 }
 </style>
