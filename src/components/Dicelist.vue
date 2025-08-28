@@ -30,6 +30,10 @@
 
 <script>
 export default {
+  props: {
+          listID: {type: String}
+  },
+  
   data() {
     return {
       diceList: [],
@@ -52,10 +56,15 @@ export default {
       this.diceList.splice(index, 1);
       //this.diceList = this.diceList.filter(i => i.toLowerCase() !== item.toLowerCase())
     },
-    removeAll() {
-      if (confirm("Bin the whole bastard list?")) {
-      this.diceList = []
+    removeAll(confirmed = null) {
+      if (confirmed) {
+        this.diceList = []
       }
+      else {
+        if (confirm("Bin the whole bastard list?")) {
+          this.diceList = []
+        }
+      } 
     },
     startEdit(idx, item) {
       this.editIndex = idx;
@@ -107,10 +116,10 @@ export default {
       this.$router.push({ path });
     },
     saveData() {
-      localStorage.setItem('dicelist', JSON.stringify(this.diceList));
+      localStorage.setItem(`dicelist-${this.listID}`, JSON.stringify(this.diceList));
     },
     loadData() {
-      this.diceList = JSON.parse(localStorage.getItem('dicelist')) || [];
+      this.diceList = JSON.parse(localStorage.getItem(`dicelist-${this.listID}`)) || [];
     }
   },
   watch: {

@@ -2,9 +2,10 @@
   <div class="v-diceboard">
     <div class="roll-button-container">
       <v-button icon="refresh" @click="rollAllDice(), !muted && playRollSound()" dark></v-button>
+      <v-button class="clear-all-btn" icon="close" @click="clearAllLists()" dark xsmall />
     </div>
     <div class="dicelist-panel">
-      <v-dicelist v-for="n in numberOfLists" :key="n" ref="dicelist" />
+      <v-dicelist v-for="n in numberOfLists" :key="n" :listID="'list-' + n" ref="dicelist" />
     </div>
     <div class="plus-minus-buttons">
       <v-button icon="plus" primary small @click="addDicelist()" :disabled="numberOfLists >= 4"></v-button>
@@ -13,6 +14,7 @@
     <div class="options-buttons">
     <v-toggle icon="mute" v-model="muted">Mute</v-toggle>
     </div>
+    
   </div>
 </template>
 
@@ -20,7 +22,7 @@
 export default {
   data() {
     return {
-      numberOfLists: 1,
+      numberOfLists: 4,
       muted: false
     }
   },
@@ -31,8 +33,13 @@ export default {
     removeDicelist() {
       this.numberOfLists--;
     },
+    clearAllLists() {
+      if (confirm("Bin every bastard list?")) {
+        (this.$refs.dicelist || []).forEach(d => d.removeAll && d.removeAll(1));
+      }
+    },
     rollAllDice() {
-      const rollEffectPicker = Math.floor(Math.random() * 3);
+      //const rollEffectPicker = Math.floor(Math.random() * 3);
       (this.$refs.dicelist || []).forEach(d => d.rollTheDie && d.rollTheDie());
     },
     playRollSound() {
@@ -119,7 +126,8 @@ export default {
 
 .roll-button-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
   align-items: center;
   width: 100%;
   margin-top: 5%;
