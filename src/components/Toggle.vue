@@ -53,7 +53,7 @@ export default {
 
   &:has(input:checked) {
     .v-icon {
-      fill: var(--blue-dark);
+      fill: var(--red-dark);
       transform: rotateY(540deg);
     }
   }

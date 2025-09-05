@@ -2,8 +2,9 @@
   <div class="v-roster-modal">
     <v-button @click="showSelectionModal" 
       icon="plus" 
-      :negative="player.name === 'P1'"
-      :primary="player.name === 'P2'" 
+      :negative="player.name === 'エリオ'"
+      :primary="player.name === 'ジョシュ'" 
+      :positive="player.name === 'ロブ'" 
       xsmall />
     <dialog ref="selectionModal" class="selection-modal" v-click-outside="closeSelectionModal">
       <div class="modal-top">

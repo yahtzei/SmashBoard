@@ -12,10 +12,11 @@
       <v-button class="set-faves-btn" 
       icon="heart" 
       @click="setFaves" 
-      :negative="player.name === 'P1'" 
-      :primary="player.name === 'P2'" 
+      :yellow="player.name === 'エリオ'" 
+      :primary="player.name === 'ジョシュ'" 
+      :positive="player.name === 'P3'"
       small />
-      <v-toggle v-model="player.preventRerolls" :style="player.name === 'P1' ? 'filter: hue-rotate(140deg)' : ''">Prevent re-rolls</v-toggle>
+      <v-toggle v-model="player.preventRerolls">Prevent re-rolls</v-toggle>
     </div>
   </div>
 </template>

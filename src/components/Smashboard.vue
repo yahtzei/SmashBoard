@@ -1,38 +1,48 @@
 <template>
+  <div class="roll-button-container">
+      <v-button @click="rollTheDice" :icon="isRolling ? 'spinner' : 'refresh'" :disabled="noMains || isRolling" dark />    
+
   <div class="v-smashboard">
     <v-nameplate class="roster" :player="playerOne" @name-click="rollTheDie(playerOne)"
       @set-faves="playerOne.resetMains()" />
-    <div class="middle-panel">
-      <v-button @click="rollTheDice" :icon="isRolling ? 'spinner' : 'refresh'" :disabled="noMains || isRolling" dark />
+    <!-- <div class="middle-panel">
       <div class="image-row">
-        <img :src="!playerOne.activeFighter ? playerOneDieImage : playerOne.activeFighter.imagePath"
-          class="char-image" />
-        <img :src="vsImage" class="vs-image" />
-        <img :src="!playerTwo.activeFighter ? playerTwoDieImage : playerTwo.activeFighter.imagePath"
-          :class="['char-image', { 'p2-no-active-fighter': !playerTwo.activeFighter }]" />
+         <img :src="!playerOne.activeFighter ? playerOneDieImage : playerOne.activeFighter.imagePath"
+          class="char-image" /> 
+         <img :src="vsImage" class="vs-image" /> 
+         <img :src="!playerTwo.activeFighter ? playerTwoDieImage : playerTwo.activeFighter.imagePath"
+          :class="['char-image', { 'ジョシュ-no-active-fighter': !playerTwo.activeFighter }]" /> 
       </div>
-    </div>
+    </div> -->
     <v-nameplate class="roster" :player="playerTwo" @name-click="rollTheDie(playerTwo)"
       @set-faves="playerTwo.resetMains()" />
+          <v-nameplate class="roster" :player="playerThree" @name-click="rollTheDie(playerThree)"
+      @set-faves="playerThree.resetMains()" />
   </div>
+  </div>
+
 </template>
 
 <script>
 export default {
   data() {
     return {
-      playerOne: P1,
-      playerTwo: P2,
+      playerOne: エリオ,
+      playerTwo: ジョシュ,
+      playerThree: ロブ,
       isRolling: false,
       vsImage: "src/assets/vs-img.png",
       playerOneDieImage: "src/assets/misc-images/SmashLogoRed.png",
-      playerTwoDieImage: "src/assets/misc-images/SmashLogoRed.png"
+      playerTwoDieImage: "src/assets/misc-images/SmashLogoRed.png",
+      playerThreeDieImage: "src/assets/misc-images/SmashLogoRed.png"
+
     }
   },
   methods: {
     rollTheDice() {
       this.rollTheDie(this.playerOne);
       this.rollTheDie(this.playerTwo);
+      this.rollTheDie(this.playerThree);
     },
     rollTheDie(player) {
       this.isRolling = true;
@@ -70,7 +80,7 @@ export default {
   },
   computed: {
     noMains() {
-      return this.playerOne.mains.length === 0 || this.playerTwo.mains.length === 0;
+      return (this.playerOne.mains.length === 0 || this.playerTwo.mains.length === 0) || this.playerOne.mains.length ===0;
     }
   }
 };
@@ -79,9 +89,10 @@ export default {
 <style lang="scss" scoped>
 .v-smashboard {
   display: flex;
-  gap: 16px;
+  width: 100%;
   justify-content: center;
   padding-block: 20px;
+
 }
 
 .roster {
@@ -120,7 +131,7 @@ export default {
   align-items: center;
   object-fit: contain;
 
-  &.p2-no-active-fighter {
+  &.ジョシュ-no-active-fighter {
     filter: hue-rotate(210deg);
   }
 }
@@ -129,5 +140,14 @@ export default {
   max-width: 30%;
   height: auto;
   align-items: center;
+}
+
+.roll-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  margin-top: 5%;
 }
 </style>

@@ -15,6 +15,7 @@ export default {
     primary: { type: Boolean },
     positive: { type: Boolean },
     negative: { type: Boolean },
+    yellow: { type: Boolean },
     secondarySoft: { type: Boolean },
     tertiary: { type: Boolean },
     dark: { type: Boolean },
@@ -52,11 +53,12 @@ export default {
         { "disabled": this.disabled },
         { "primary": this.primary },
         { "positive": this.positive },
+        { "yellow": this.yellow },
         { "negative": this.negative },
         { "tertiary": this.tertiary },
         { "dark": this.dark },
         { "secondary-soft": this.secondarySoft },
-        { "secondary": !this.primary && !this.positive && !this.negative && !this.tertiary && !this.secondarySoft },
+        { "secondary": !this.primary && !this.positive && !this.yellow && !this.negative && !this.tertiary && !this.secondarySoft },
       ];
 
       return classes;
@@ -197,6 +199,23 @@ export default {
       border-color: var(--green-primary);
       background-color: var(--green-dark);
       box-shadow: var(--positive-outline);
+    }
+  }
+
+    &.yellow {
+    //color: var(--greyscale-100);
+    background-color: var(--yellow-primary);
+    box-shadow: var(--shadow-button-positive);
+
+    &:hover {
+      border-color: var(--yellow-primary);
+      background-color: var(--yellow-hover);
+    }
+
+    &:active {
+      border-color: var(--yellow-primary);
+      background-color: var(--yellow-dark);
+      box-shadow: var(--yellow-dark);
     }
   }
 
