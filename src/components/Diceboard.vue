@@ -8,13 +8,12 @@
       <v-dicelist v-for="n in numberOfLists" :key="n" :listID="'list-' + n" ref="dicelist" />
     </div>
     <div class="plus-minus-buttons">
-      <v-button icon="plus" primary small @click="addDicelist()" :disabled="numberOfLists >= 4"></v-button>
-      <v-button icon="minus" negative small @click="removeDicelist()" :disabled="numberOfLists <= 1"></v-button>
+      <v-button icon="plus" primary @click="addDicelist()" :disabled="numberOfLists >= 4"></v-button>
+      <v-button icon="minus" negative @click="removeDicelist()" :disabled="numberOfLists <= 1"></v-button>
     </div>
     <div class="options-buttons">
     <v-toggle icon="mute" v-model="muted">Mute</v-toggle>
     </div>
-    
   </div>
 </template>
 
@@ -116,6 +115,8 @@ export default {
   position: fixed;
   top: 20px;
   right: 20px;
+  display: flex;
+  gap: 12px
 }
 
 .options-buttons {
@@ -130,6 +131,6 @@ export default {
   gap: 12px;
   align-items: center;
   width: 100%;
-  margin-top: 5%;
+  margin-top: 3%;
 }
 </style>

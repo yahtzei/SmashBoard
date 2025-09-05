@@ -1,7 +1,11 @@
 <template>
   <div class="v-dicelist">
-    <div class="active-item">
-      {{ activeItem ? activeItem : 'What shall we do today?' }}
+    <div class="title">Dicelist</div>
+    <div class="active-item ">
+      <!-- <div class="slide-marquee"> {{ activeItem ? activeItem : '何しようかsmashboard v3 ダイスリスト' }} </div> -->
+      <div ref="activeItem" :class="[{ 'slide-marquee': isOverflowing }]">
+        {{ activeItem ? activeItem : '何しようか' }}
+      </div>
     </div>
     <v-button v-if="!isRolling && containsWord('smash')" dark @click="goToPage('smashboard')">Take me to
       Smashboard</v-button>
@@ -42,6 +46,7 @@ export default {
       activeItem: "",
       editIndex: null,
       editValue: "",
+      isOverflowing: false
     }
   },
   mounted() {
@@ -54,7 +59,6 @@ export default {
     },
     removeItem(index) {
       this.diceList.splice(index, 1);
-      //this.diceList = this.diceList.filter(i => i.toLowerCase() !== item.toLowerCase())
     },
     removeAll(confirmed = null) {
       if (confirmed) {
@@ -125,7 +129,15 @@ export default {
   watch: {
     diceList() {
       this.saveData();
-    }
+    },
+    activeItem() {
+    this.$nextTick(() => {
+      const el = this.$refs.activeItem;
+      if (el) {
+        this.isOverflowing = el.scrollWidth > el.clientWidth;
+      }
+    });
+  }
   }
 }
 </script>
@@ -135,7 +147,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 3%;
+  //padding-top: 3%;
   gap: 16px;
 
   >div {
@@ -146,10 +158,12 @@ export default {
 
 .dicelist-item {
   display: flex;
-  min-height: 50px;
   flex-direction: row;
   align-items: center;
   font-size: 40px;
+  // todo: do we want this width on or not? 
+  width: 500px; 
+  max-width: 500px;
 
   >div {
     font-size: 40px;
@@ -197,13 +211,40 @@ export default {
   display: flex;
   flex-basis: 50%;
   min-height: 50px;
+  max-height: 50px;
+  width: 500px;
+  max-width: 500px;
   flex-direction: row;
   align-items: center;
+  //justify-content: center; //removed for marquee
   font-size: 50px;
   padding-top: 2%;
   padding-bottom: 2%;
   margin-bottom: 20px;
   text-align: center;
+  overflow: hidden;    
+  text-overflow: clip; 
+
+  div {
+      font-size: 50px;
+     width: 100%;
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: clip;
+      text-wrap: nowrap;
+    }
+}
+
+.title {
+  display: flex;
+  flex-basis: 50%;
+  min-height: 50px;
+  align-items: center;
+  font-size: 50px;
+  //padding-top: 2%;
+  // padding-bottom: 2%;
+  //margin-bottom: 20px;
+  // text-align: center;
 }
 
 @keyframes color-cycle {
@@ -248,4 +289,21 @@ export default {
   align-self: center;
   margin-top: auto;
 }
+
+
+.slide-marquee {
+  animation: slideInOut 12s  infinite;
+}
+
+ @keyframes slideInOut {
+  0% { transform: translateX(0); opacity: 1; } 
+  10% { transform: translateX(0); opacity: 1; } 
+  40% { transform: translateX(-200%); opacity: 1; } 
+  41% { transform: translateX(-200%); opacity: 0; } 
+  42% { transform: translateX(100%); opacity: 0; }
+  43% { transform: translateX(100%); opacity: 1; }
+  50% { transform: translateX(0); opacity: 1; } 
+  80% { transform: translateX(0); opacity: 1; } 
+  100% { transform: translateX(0); opacity: 1; } 
+  }
 </style>
